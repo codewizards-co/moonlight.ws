@@ -11,9 +11,12 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: moonlight.ws.ui
 
     runs-on: ubuntu-latest
-
+        
     strategy:
       matrix:
         node-version: [ 22.x ]
@@ -26,7 +29,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd moonlight.ws.ui
     - run: npm ci
     - run: npm run build
 #    - run: npm run test
