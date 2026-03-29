@@ -1,0 +1,75 @@
+mlws-warehouse-item-movement-list {
+  .filter-button-checked {
+    background: black;
+    color: white;
+  }
+
+  .filter-button-unchecked {
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 10.5cm;
+  }
+
+  .sku-filter-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .from-date-filter-field {
+    width: 5cm;
+    margin-right: 0.5rem;
+  }
+
+  .from-time-filter-field {
+    width: 4cm;
+    margin-right: 0.5rem;
+  }
+
+  .to-date-filter-field {
+    width: 5cm;
+    margin-right: 0.5rem;
+  }
+
+  .to-time-filter-field {
+    width: 4cm;
+    margin-right: 0.5rem;
+  }
+
+  .mat-mdc-table {
+    min-width: 10.5cm;
+  }
+
+  .mat-column-created {
+    min-width: 3cm;
+  }
+
+  .mat-column-quantity {
+    text-align: right;
+  }
+
+  .mat-column-priceSingleNet {
+    text-align: right;
+  }
+
+  .mat-column-priceSingleGross {
+    text-align: right;
+  }
+
+  .mat-column-priceTotalNet {
+    text-align: right;
+  }
+
+  .mat-column-priceTotalGross {
+    text-align: right;
+  }
+
+  table {
+    tbody {
+      a { text-decoration: none; color: var(--mat-sys-on-surface); }
+    }
+  }
+}

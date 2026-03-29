@@ -1,0 +1,16 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item-label?warehouseItemIds=40958,,,40959,40960,40961",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "warehouseItemIds",
+            "value": "40958,,,40959,40960,40961"
+        }
+    ],
+    "pathParameters": []
+}

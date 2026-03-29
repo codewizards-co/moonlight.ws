@@ -1,0 +1,36 @@
+mlws-main-menu {
+
+  .main-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  mlws-warehouse-selector {
+    @media (max-width: 525px) {
+      flex-grow: 1;
+    }
+    //@media (min-width: 301px) and (max-width: 400px) {
+    //  width: 100% -48px;
+    //}
+    //@media (min-width: 401px) and (max-width: 500px) {
+    //  width: 85%;
+    //}
+    @media (min-width: 526px) {
+      width: 450px;
+    }
+
+    .mat-mdc-form-field-bottom-align {
+      height: 0px;
+    }
+  }
+
+  mlws-main-menu-item {
+    margin: 10px 5px 10px 0px;
+    .mdc-button {
+      margin: 5px 0px 5px 0px;
+      // border: aqua 5px solid;
+      // height: 80px;
+    }
+  }
+}

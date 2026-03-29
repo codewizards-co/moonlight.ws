@@ -1,0 +1,5 @@
+@if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <mlws-party [partyId]="id$ | async"></mlws-party>
+}

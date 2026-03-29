@@ -1,0 +1,22 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/sku/",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "filter.sku",
+            "value": "CABUT310",
+            "disabled": true
+        },
+        {
+            "name": "filter.sku",
+            "value": "/cab.*/i",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

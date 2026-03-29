@@ -1,0 +1,12 @@
+@if (warehouseSelectorService.loading$ | async) {
+    <mat-spinner [diameter]="50"></mat-spinner>
+} @else {
+    <mat-form-field class="warehouse-field">
+        <mat-label>Warehouse</mat-label>
+        <mat-select [(value)]="selectedWarehouse" [disabled]="warehouseSelectorService.loading$ | async" >
+            @for (warehouse of warehouseSelectorService.getWarehouses$() | async; track warehouse.id) {
+                <mat-option [value]="warehouse">{{warehouseSelectorService.getWarehouseLabel(warehouse)}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+}

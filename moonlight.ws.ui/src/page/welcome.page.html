@@ -1,0 +1,18 @@
+<div>
+  Welcome to moonlight.ws.ui!
+</div>
+
+<hr>
+
+<h3>Version</h3>
+<p>
+  Frontend: <strong>{{ frontendVersion }}</strong>
+</p>
+<p>
+  Backend: <strong>{{ backendVersion$|async }}</strong>
+  @if (backendVersionError$|async; as backendVersionError) {
+    <br>
+    <pre id="backendVersionError">{{ backendVersionError }}</pre>
+  }
+</p>
+

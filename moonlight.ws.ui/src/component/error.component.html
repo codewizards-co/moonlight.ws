@@ -1,0 +1,11 @@
+@if (errorHandler.error$ | async ; as error) {
+	<hr>
+	<strong>{{errorHandler.errorMessage$ | async}}</strong>
+	<br>
+	<pre id="errorJson">{{ errorHandler.errorJson$ | async }}</pre>
+    <br>
+    <button matButton="elevated" type="button" (click)="onClearClick()">
+        <mat-icon>clear</mat-icon>
+        Clear error state
+    </button>
+}

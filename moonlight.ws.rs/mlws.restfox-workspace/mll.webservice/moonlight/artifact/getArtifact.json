@@ -1,0 +1,20 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/artifact/{groupId}/{artifactId}",
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "groupId",
+            "value": "moonlight.ws"
+        },
+        {
+            "name": "artifactId",
+            "value": "mlws.rs"
+        }
+    ]
+}

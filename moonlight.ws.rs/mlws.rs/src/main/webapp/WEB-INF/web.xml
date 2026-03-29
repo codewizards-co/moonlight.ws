@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaEE"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>moonlight.ws.rs</display-name>
+
+	<listener>
+		<listener-class>moonlight.ws.rs.MoonlightWsServletContextListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>MoonlightWsCorsFilter</filter-name>
+		<filter-class>moonlight.ws.rs.MoonlightWsCorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MoonlightWsCorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>MoonlightWsAuthCookieFilter</filter-name>
+		<filter-class>moonlight.ws.rs.MoonlightWsAuthCookieFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MoonlightWsAuthCookieFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

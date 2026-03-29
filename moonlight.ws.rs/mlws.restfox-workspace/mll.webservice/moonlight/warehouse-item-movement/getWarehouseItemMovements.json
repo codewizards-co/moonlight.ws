@@ -1,0 +1,91 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item-movement?filter.booked=false&sort=changed:desc,id:desc&fetch=supplier",
+    "sortOrder": 1,
+    "parameters": [
+        {
+            "name": "filter.booked",
+            "value": "false",
+            "disabled": false
+        },
+        {
+            "name": "filter.createdFromIncl",
+            "value": "2025-10-21T10:06:47.536625Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.createdToExcl",
+            "value": "2025-10-21T10:07:05.996188Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.changedFromIncl",
+            "value": "2025-10-21T10:06:47.536625Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.changedToExcl",
+            "value": "2025-10-21T10:07:05.996188Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.bookedFromIncl",
+            "value": "2025-10-21T10:07:04.504Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.bookedToExcl",
+            "value": "2025-10-21T10:08:03.613Z",
+            "disabled": true
+        },
+        {
+            "name": "sort",
+            "value": "changed:desc,id:desc",
+            "disabled": false
+        },
+        {
+            "name": "sort",
+            "value": "booked:desc",
+            "disabled": true
+        },
+        {
+            "name": "sort",
+            "value": "booked,id",
+            "disabled": true
+        },
+        {
+            "name": "filter.type",
+            "value": "SUPPLY",
+            "disabled": true
+        },
+        {
+            "name": "filter.sku",
+            "value": "CACAORAW",
+            "disabled": true
+        },
+        {
+            "name": "fetch",
+            "value": "supplier.party",
+            "disabled": true
+        },
+        {
+            "name": "fetch",
+            "value": "supplier"
+        },
+        {
+            "name": "filter.groupId",
+            "value": "62",
+            "disabled": true
+        },
+        {
+            "name": "filter.draft",
+            "value": "true",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

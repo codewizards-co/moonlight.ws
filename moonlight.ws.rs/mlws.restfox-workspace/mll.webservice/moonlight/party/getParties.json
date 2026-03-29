@@ -1,0 +1,22 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/party?fetch=consignees,supplier",
+    "sortOrder": 2,
+    "parameters": [
+        {
+            "name": "fetch",
+            "value": "consignees,supplier",
+            "disabled": false
+        },
+        {
+            "name": "fetch",
+            "value": "consignees",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

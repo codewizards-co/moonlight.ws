@@ -1,0 +1,20 @@
+<h1>Add consignee / assign warehouse</h1>
+
+<mat-form-field class="warehouse-field">
+  <mat-label>Warehouse</mat-label>
+  <mat-select [value]="warehouse$.getValue()" (valueChange)="warehouse$.next($event)" >
+    @for (warehouse of warehouses$ | async; track warehouse.id) {
+      <mat-option [value]="warehouse">{{warehouseSelectorService.getWarehouseLabel(warehouse)}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<button matButton="elevated" type="button" (click)="onOkClick()">
+  <mat-icon>done</mat-icon>
+  OK
+</button>
+
+<button matButton="elevated" type="button" (click)="onCancelClick()">
+  <mat-icon>cancel</mat-icon>
+  Cancel
+</button>

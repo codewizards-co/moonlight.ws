@@ -1,0 +1,17 @@
+mlws-party-list {
+  .filter-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .code-filter-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .name-filter-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+}

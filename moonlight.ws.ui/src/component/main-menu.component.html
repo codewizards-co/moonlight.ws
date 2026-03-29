@@ -1,0 +1,43 @@
+<div class="main-menu">
+  <button matIconButton [matMenuTriggerFor]="mlwsmainmenu" aria-label="Button opening the main menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #mlwsmainmenu="matMenu">
+    <button [id]="''" mat-menu-item (click)="onClick('')">
+      <mat-icon>dashboard</mat-icon>
+      <span>Welcome</span>
+    </button>
+    <button [id]="'warehouse-item-list'" mat-menu-item (click)="onClick('warehouse-item-list')">
+      <mat-icon>apps</mat-icon>
+      <span>Warehouse-items</span>
+    </button>
+    <button [id]="'warehouse-item-movement-list'" mat-menu-item (click)="onClick('warehouse-item-movement-list')">
+      <mat-icon>swap_horiz</mat-icon>
+      <span>Warehouse-item-movements</span>
+    </button>
+    <button [id]="'party-list'" mat-menu-item (click)="onClick('party-list')">
+      <mat-icon>persons</mat-icon>
+      <span>Parties</span>
+    </button>
+    <button [id]="'invoice-list'" mat-menu-item (click)="onClick('invoice-list')">
+      <mat-icon>attach_money</mat-icon>
+      <span>Invoices</span>
+    </button>
+    <button [id]="'short-url'" mat-menu-item (click)="onClick('short-url')">
+      <mat-icon>link</mat-icon>
+      <span>Short URL</span>
+    </button>
+
+    <!--
+    <mlws-main-menu-item [id]="''" [name]="'Welcome'"></mlws-main-menu-item>
+    <mlws-main-menu-item [id]="'warehouse-item-list'" [name]="'Warehouse-items'"
+                         [subIds]="['warehouse-item']"></mlws-main-menu-item>
+    <mlws-main-menu-item [id]="'warehouse-item-movement-list'" [name]="'Warehouse-movements'"></mlws-main-menu-item>
+    <mlws-main-menu-item [id]="'short-url'" [name]="'Short URL'"></mlws-main-menu-item>
+    -->
+  </mat-menu>
+
+  @if (warehouseSelectorService.visible$ | async) {
+    <mlws-warehouse-selector></mlws-warehouse-selector>
+  }
+</div>

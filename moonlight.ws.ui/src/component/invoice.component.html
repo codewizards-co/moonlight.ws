@@ -1,0 +1,195 @@
+@if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  @if (invoice$ | async; as invoice) {
+    <form class="invoice-form">
+      <mat-form-field class="party-field">
+        <mat-label>Party</mat-label>
+        @if (isPartyReadonly()) {
+          <input matInput [value]="`${party?.name} ${party?.code}`" readonly="true">
+        } @else {
+          <mat-select [(value)]="party">
+            @for (party of parties$ | async; track party.id) {
+              <mat-option [value]="party">{{party.name}} ({{party.code}})</mat-option>
+            }
+          </mat-select>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="workflow-field">
+        <mat-label>Workflow</mat-label>
+        @if (isWorkflowReadonly()) {
+          <input matInput [value]="invoice.workflow" readonly="true">
+        } @else {
+          <mat-select [(value)]="invoice.workflow" >
+            @for (workflow of invoiceWorkflows; track workflow) {
+              <mat-option [value]="workflow">{{workflow}}</mat-option>
+            }
+          </mat-select>
+        }
+      </mat-form-field>
+
+      @if (invoice.orderId !== undefined) {
+        <mat-form-field class="orderId-field">
+          <mat-label>Liferay-order-ID</mat-label>
+          <input matInput [value]="invoice.orderId" readonly="true">
+        </mat-form-field>
+      }
+
+      @if (invoice.booked !== undefined) {
+        <mat-form-field class="paid-field">
+          <mat-label>Paid</mat-label>
+          <input matInput name="paidpicker"
+                 [matDatepicker]="paidpicker"
+                 [(ngModel)]="invoice.paid">
+          <mat-datepicker #paidpicker />
+          <mat-datepicker-toggle [for]="paidpicker" matSuffix />
+        </mat-form-field>
+      }
+
+      <br/>
+<!--
+      <mat-form-field class="description-field">
+        <mat-label>Description / Notes</mat-label>
+        <textarea matInput name="descriptionArea"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="10"
+                  [(ngModel)]="invoice.description"></textarea>
+      </mat-form-field>
+-->
+    </form>
+
+    <br/>
+
+    <div class="invoice-item">
+
+      @if (invoiceItemRows$|async; as invoiceItemRows) {
+        @if (invoiceItemRows) {
+          <table mat-table [dataSource]="invoiceItemRows" [trackBy]="invoiceItemRowTrackBy" class="mat-elevation-z8">
+            <ng-container matColumnDef="include">
+              <th mat-header-cell *matHeaderCellDef>Include</th>
+              <td mat-cell *matCellDef="let row">
+                <button matIconButton="elevated" type="button" (click)="onIncludeClick(row)">
+                  @if (row.invoiceItem.include === InvoiceInclude.INCLUDE) {
+                    <mat-icon>check_circle</mat-icon>
+                  } @else {
+                    <mat-icon>highlight_off</mat-icon>
+                  }
+                </button>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="movementCreated">
+              <th mat-header-cell *matHeaderCellDef>Movement timestamp</th>
+              <td mat-cell *matCellDef="let row"> {{row.invoiceItem.warehouseItemMovement?.created | timestamp}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="warehouseLabel">
+              <th mat-header-cell *matHeaderCellDef>Warehouse</th>
+              <td mat-cell *matCellDef="let row"> {{this.warehouseSelectorService.getWarehouseLabel(getWarehouse(row))}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="sku">
+              <th mat-header-cell *matHeaderCellDef>SKU</th>
+              <td mat-cell *matCellDef="let row"> {{row.invoiceItem.warehouseItemMovement?.sku}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row"> {{row.invoiceItem.quantity | number: '1.0-3'}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getQuantitySum() | number: '1.0-3'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="priceSingleGross">
+              <th mat-header-cell *matHeaderCellDef>Single gross</th>
+              <td mat-cell *matCellDef="let row"> {{row.priceCalculated?.priceSingleGross | number: '1.4'}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="priceSingleNet">
+              <th mat-header-cell *matHeaderCellDef>Single net</th>
+              <td mat-cell *matCellDef="let row"> {{row.priceCalculated?.priceSingleNet | number: '1.4'}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="priceTotalGross">
+              <th mat-header-cell *matHeaderCellDef>Total gross</th>
+              <td mat-cell *matCellDef="let row"> {{row.priceCalculated?.priceTotalGross | number: '1.2'}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getPriceTotalGrossSum() | number: '1.2'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="priceTotalNet">
+              <th mat-header-cell *matHeaderCellDef>Total net</th>
+              <td mat-cell *matCellDef="let row"> {{row.priceCalculated?.priceTotalNet | number: '1.2'}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getPriceTotalNetSum() | number: '1.2'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>Price</th>
+              <td mat-cell *matCellDef="let row">
+                <mlws-edit-price [quantity]="row.invoiceItem.quantity" [(price)]="row.invoiceItem.price" [(priceCalculated)]="row.priceCalculated"></mlws-edit-price>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="removeAction">
+              <th mat-header-cell *matHeaderCellDef>Remove</th>
+              <td mat-cell *matCellDef="let row">
+                <button matIconButton="elevated" type="button" [class]="getRemoveButtonClass(row)" (click)="onRemoveInvoiceItemRowClick(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="invoiceItemTableColumnKeys"></tr>
+            <tr mat-row (click)="onInvoiceItemRowClick(row)" [class]="getInvoiceItemTableRowClass(row)" *matRowDef="let row; columns: invoiceItemTableColumnKeys;"></tr>
+            <tr mat-footer-row *matFooterRowDef="invoiceItemTableColumnKeys"></tr>
+          </table>
+        }
+        <hr/>
+
+        <div>
+          <!--
+        <button matButton="elevated" type="button" (click)="onCreateInvoiceItemClick()">
+          <mat-icon>add_circle_outline</mat-icon>
+          Create item
+        </button>
+        -->
+          <button matButton="elevated" type="button" (click)="onAutoCreateInvoiceItemsClick()" [disabled]="isAutoCreateInvoiceItemsDisabled()">
+            <mat-icon>add_circle_outline</mat-icon>
+            Auto-create items
+          </button>
+        </div>
+        <div>
+          <button matButton="elevated" type="button" (click)="onSaveClick()" [disabled]="isSaveDisabled()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button matButton="elevated" type="button" (click)="onRevertClick()" [disabled]="isRevertDisabled()">
+            <mat-icon>undo</mat-icon>
+            Revert
+          </button>
+        </div>
+        <div>
+          <button matButton="elevated" type="button" (click)="onFinalizeClick()" [disabled]="isFinalizeDisabled()">
+            <mat-icon>check_circle</mat-icon>
+            Finalize
+          </button>
+        </div>
+      }
+    </div>
+  }
+}

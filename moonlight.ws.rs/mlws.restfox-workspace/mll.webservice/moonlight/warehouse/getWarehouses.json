@@ -1,0 +1,36 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse/?pageSize=500&filter.active=true",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "pageSize",
+            "value": "500",
+            "disabled": false
+        },
+        {
+            "name": "pageNumber",
+            "value": "2",
+            "disabled": true
+        },
+        {
+            "name": "filter",
+            "value": "active eq true",
+            "disabled": true
+        },
+        {
+            "name": "filter.active",
+            "value": "true",
+            "disabled": false
+        },
+        {
+            "name": "",
+            "value": ""
+        }
+    ],
+    "pathParameters": []
+}

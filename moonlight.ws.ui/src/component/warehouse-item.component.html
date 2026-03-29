@@ -1,0 +1,78 @@
+@if (isCreateSupplierOverlayVisible$ | async) {
+    <mlws-create-supplier-overlay (supplierCreated$)="supplierCreated($event)"></mlws-create-supplier-overlay>
+} @else {
+  @if (loading$|async) {
+    <mat-spinner></mat-spinner>
+  } @else {
+    @if (warehouseItem$ | async; as warehouseItem) {
+        <h3>{{warehouseItem.sku}}</h3>
+        <hr/>
+        @for (sku of (skus$|async); track sku.id) {
+           @if (!$first) { | } {{getL10n(sku.productName)}}
+        }
+        <hr/>
+        <p>
+            Quantity: {{warehouseItem.quantity | number: '1.0-3'}}@if ((unbookedQuantity$|async) !== 0) {
+            {{ (unbookedQuantity$.getValue() > 0 ? "+" : "") + (unbookedQuantity$.getValue() | number: '1.0-3')}}
+        } {{warehouseItem.unitOfMeasureKey}}
+        </p>
+    <!--
+        <p>
+            Reserved qty.: {{warehouseItem.reservedQuantity}} {{warehouseItem.unitOfMeasureKey}}
+        </p>
+    -->
+        <form class="warehouse-item-movement-form">
+            <mat-form-field class="quantity-field">
+                <mat-label>Quantity</mat-label>
+                <input matInput type="number" [formControl]="quantityFormControl">
+            </mat-form-field>
+
+            <mat-form-field class="type-field">
+                <mat-label>Type</mat-label>
+                <mat-select [(value)]="movementType">
+                    @for (mt of movementTypes; track mt) {
+                        <mat-option [value]="mt">{{mt}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            @if (isOtherWarehouseSelectionVisible()) {
+                <mat-form-field class="other-warehouse-field">
+                    <mat-label>Other warehouse</mat-label>
+                    <mat-select [(value)]="otherWarehouse" >
+                        @for (warehouse of otherWarehouses$ | async; track warehouse.id) {
+                            <mat-option [value]="warehouse">{{warehouseSelectorService.getWarehouseLabel(warehouse)}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            }
+
+            @if (isSupplierSelectionVisible()) {
+              <mat-form-field class="supplier-field">
+                <mat-label>Supplier</mat-label>
+                <mat-select [(value)]="supplier" >
+                  @for (supplier of suppliers$ | async; track supplier.id) {
+                    <mat-option [value]="supplier">{{supplier.party.name}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
+
+            @if (isPriceInputVisible()) {
+                <mlws-edit-price [quantity]="quantity$.getValue()" [(price)]="price"></mlws-edit-price>
+            }
+
+            <div>
+                <button matButton="elevated" type="button" (click)="onAddToStockClick()" [disabled]="(addToStockDisabled$ | async)">
+                  <mat-icon>add_circle_outline</mat-icon>
+                  Add to stock
+                </button>
+                <button matButton="elevated" type="button" (click)="onRemoveFromStockClick()" [disabled]="(removeFromStockDisabled$ | async)">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                  Remove from stock
+                </button>
+            </div>
+        </form>
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"content\": \"https://dkc.bio/mlws/warehouse-item/40958\",\n    \"imageFormat\": \"gif\",\n    \"width\": 500,\n    \"height\": 500,\n    \"errorCorrectionLevel\": \"Q\"\n}"
+    },
+    "url": "{{mlws_url}}/qr-code",
+    "sortOrder": 1,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}

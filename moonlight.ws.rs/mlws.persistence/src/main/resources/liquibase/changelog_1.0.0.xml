@@ -1,0 +1,164 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="2025-08-19_mh_00" author="mh">
+		<createTable tableName="User">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="username" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="UserIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<createIndex tableName="User" indexName="User_uk1"
+			unique="true">
+			<column name="username" />
+		</createIndex>
+
+
+		<createTable tableName="WarehouseItemMovement">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="warehouseItemId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="warehouseItemErc" type="varchar(75)">
+				<constraints nullable="false" />
+			</column>
+			<column name="sku" type="varchar(75)">
+				<constraints nullable="false" />
+			</column>
+			<column name="warehouseId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="warehouseErc" type="varchar(75)">
+				<constraints nullable="false" />
+			</column>
+			<column name="quantity" type="decimal(12, 3)">
+				<!-- decimal(12,3) means precision = 12, scale = 3. Thus, the value 123,456,789.123 
+					can be stored (but 1,234,567,890 cannot and 1.1234 cannot either). The range 
+					is thus [-999,999,999.999, +999,999,999.999]. See: https://www.postgresql.org/docs/current/datatype-numeric.html -->
+				<constraints nullable="false" />
+			</column>
+			<column name="booked" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence
+			sequenceName="WarehouseItemMovementIdSequence" startValue="1"
+			incrementBy="1" cacheSize="10" />
+
+		<createIndex tableName="WarehouseItemMovement"
+			indexName="WarehouseItemMovement_idx1">
+			<column name="warehouseId" />
+			<column name="sku" />
+		</createIndex>
+
+		<createIndex tableName="WarehouseItemMovement"
+			indexName="WarehouseItemMovement_idx2">
+			<column name="warehouseItemId" />
+		</createIndex>
+
+		<createIndex tableName="WarehouseItemMovement"
+			indexName="WarehouseItemMovement_idx3">
+			<column name="booked" />
+		</createIndex>
+
+		<addForeignKeyConstraint
+			constraintName="WarehouseItemMovement_fk1"
+			baseTableName="WarehouseItemMovement"
+			baseColumnNames="createdByUserId" referencedTableName="User"
+			referencedColumnNames="id" />
+
+		<addForeignKeyConstraint
+			constraintName="WarehouseItemMovement_fk2"
+			baseTableName="WarehouseItemMovement"
+			baseColumnNames="changedByUserId" referencedTableName="User"
+			referencedColumnNames="id" />
+	</changeSet>
+
+	<changeSet id="2025-09-05_mh_00" author="mh">
+		<createTable tableName="ShortUrl">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="code" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="longUrl" type="varchar(4096)">
+				<constraints nullable="false" />
+			</column>
+			<column name="shortUrl" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="ShortUrlIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<createIndex tableName="ShortUrl" indexName="ShortUrl_uk1" unique="true">
+			<column name="code" />
+		</createIndex>
+
+		<createIndex tableName="ShortUrl" indexName="ShortUrl_uk2" unique="true">
+			<column name="longUrl" />
+		</createIndex>
+		
+		<createIndex tableName="ShortUrl" indexName="ShortUrl_uk3" unique="true">
+			<column name="shortUrl" />
+		</createIndex>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/qr-code/{content}?errorCorrectionLevel=Q",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "imageFormat",
+            "value": "png",
+            "disabled": true
+        },
+        {
+            "name": "imageFormat",
+            "value": "jpg",
+            "disabled": true
+        },
+        {
+            "name": "imageFormat",
+            "value": "gif",
+            "disabled": true
+        },
+        {
+            "name": "imageFormat",
+            "value": "bmp",
+            "disabled": true
+        },
+        {
+            "name": "width",
+            "value": "600",
+            "disabled": true
+        },
+        {
+            "name": "height",
+            "value": "600",
+            "disabled": true
+        },
+        {
+            "name": "errorCorrectionLevel",
+            "value": "Q",
+            "disabled": false
+        }
+    ],
+    "pathParameters": [
+        {
+            "name": "content",
+            "value": "https%3A%2F%2Fdkc.bio%2Fmlws%2Fwarehouse-item%2F40958"
+        }
+    ],
+    "headers": [
+        {
+            "name": "Accept",
+            "value": "image/jpeg",
+            "disabled": true
+        },
+        {
+            "name": "Accept",
+            "value": "*/*",
+            "disabled": true
+        },
+        {
+            "name": "Accept",
+            "value": "image/webp",
+            "disabled": true
+        }
+    ]
+}

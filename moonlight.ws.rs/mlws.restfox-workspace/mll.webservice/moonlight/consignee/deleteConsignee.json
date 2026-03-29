@@ -1,0 +1,16 @@
+{
+    "_type": "request",
+    "method": "DELETE",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/consignee/{id}",
+    "sortOrder": 3,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "1"
+        }
+    ]
+}

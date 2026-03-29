@@ -1,0 +1,20 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/invoice-item?filter.invoice.id=4&includeDeleted=true",
+    "sortOrder": 2,
+    "parameters": [
+        {
+            "name": "filter.invoice.id",
+            "value": "4"
+        },
+        {
+            "name": "includeDeleted",
+            "value": "true"
+        }
+    ],
+    "pathParameters": []
+}

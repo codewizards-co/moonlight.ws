@@ -1,0 +1,17 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item-movement-group?filter.draft=true",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "filter.draft",
+            "value": "true",
+            "disabled": false
+        }
+    ],
+    "pathParameters": []
+}

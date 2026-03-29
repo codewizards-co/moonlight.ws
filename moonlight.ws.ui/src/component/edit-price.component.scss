@@ -1,0 +1,27 @@
+mlws-edit-price {
+  display: inline-flex;
+  flex-direction: row;
+  vertical-align: top;
+
+  .total-single-mode-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tax-mode-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 0.5rem;
+  }
+
+  .price-field {
+    margin-right: 0.5rem;
+    width: 8rem;
+  }
+
+  .tax-percent-field {
+    width: 6rem;
+  }
+}

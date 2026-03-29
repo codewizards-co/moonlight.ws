@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>moonlight.ws</groupId>
+		<artifactId>moonlight.ws.rs</artifactId>
+		<version>2.5.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>mlws.api</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.ws.rs</groupId>
+			<artifactId>jakarta.ws.rs-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.headless.admin.address.client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.commerce</groupId>
+			<artifactId>com.liferay.headless.commerce.admin.catalog.client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.commerce</groupId>
+			<artifactId>com.liferay.headless.commerce.admin.inventory.client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.commerce</groupId>
+			<artifactId>com.liferay.headless.commerce.admin.order.client</artifactId>
+		</dependency>
+	</dependencies>
+</project>

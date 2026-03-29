@@ -1,0 +1,23 @@
+{
+    "_type": "request",
+    "method": "PUT",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"active\": true,\n    \"code\": \"1335db3c-539e-4f46-9c23-69de2140f9db\",\n    \"name\": \"Dr. Paruedee Nguitragool\",\n    \"street1\": \"113/36 M.10\",\n    \"street2\": \"T.Suthep, A.Mueang\",\n    \"zip\": \"50200\",\n    \"city\": \"Chiangmai\",\n    \"countryIsoCode\": \"TH\"\n}"
+    },
+    "url": "{{mlws_url}}/party/{id}",
+    "sortOrder": 3,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "1"
+        }
+    ],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}

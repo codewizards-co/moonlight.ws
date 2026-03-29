@@ -1,0 +1,22 @@
+services:
+
+  # https://hub.docker.com/_/postgres/
+  postgres:
+    container_name: moonlight_postgres
+    image: postgres:17.5
+    # set shared memory limit when using docker compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    ports:
+      - 15432:5432
+    volumes:
+      - ./docker-data/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - PGDATA=/var/lib/postgresql/data
+      - POSTGRES_PASSWORD=mypw123
+
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080

@@ -1,0 +1,16 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-order/v1.0/orders/{id}",
+    "sortOrder": 4,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "193637 "
+        }
+    ]
+}

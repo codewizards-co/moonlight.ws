@@ -1,0 +1,26 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"accountId\": 45085,\n    \"channelId\": 183523,\n    \"currencyCode\": \"THB\"\n}"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-order/v1.0/orders",
+    "sortOrder": 2,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "name": "Accept",
+            "value": "application/json"
+        },
+        {
+            "name": "x-csrf-token",
+            "value": "EcGNahry"
+        }
+    ]
+}

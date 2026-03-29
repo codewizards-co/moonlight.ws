@@ -1,0 +1,11 @@
+mlws-warehouse-item-list {
+  .filter-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sku-filter-field {
+    width: 6cm;
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/short-url/redirect/{code}",
+    "sortOrder": 2,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "code",
+            "value": "2yan"
+        }
+    ]
+}

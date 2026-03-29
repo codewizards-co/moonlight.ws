@@ -1,0 +1,17 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-catalog/v1.0/products/{productId}/skus",
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "productId",
+            "value": "34537",
+            "disabled": false
+        }
+    ]
+}

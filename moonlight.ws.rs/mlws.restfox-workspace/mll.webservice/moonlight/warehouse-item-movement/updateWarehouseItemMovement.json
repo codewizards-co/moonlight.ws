@@ -1,0 +1,23 @@
+{
+    "_type": "request",
+    "method": "PUT",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"@type\": \"WarehouseItemMovement\",\n    \"id\": 212,\n    \"created\": \"2025-11-08T07:11:55.124959Z\",\n    \"createdByUserId\": 3,\n    \"changed\": \"2025-11-08T07:11:55.124959Z\",\n    \"changedByUserId\": 3,\n    \"warehouseItemId\": 168080,\n    \"warehouseItemErc\": \"c938fc34-ff26-ef97-7549-8499c96895ea\",\n    \"sku\": \"CACAORAW\",\n    \"warehouseId\": 34549,\n    \"warehouseErc\": \"e1409d48-3439-89f6-31ee-89ca317d85c7\",\n    \"quantity\": 261450,\n    \"unitOfMeasureKey\": \"g\",\n    \"booked\": \"2025-11-08T07:12:02.339Z\",\n    \"draft\": false,\n    \"finalized\": \"2025-11-08T07:11:55.127Z\",\n    \"type\": \"SUPPLY\"\n}"
+    },
+    "url": "{{mlws_url}}/warehouse-item-movement/{id}",
+    "sortOrder": 6,
+    "parameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "212"
+        }
+    ]
+}

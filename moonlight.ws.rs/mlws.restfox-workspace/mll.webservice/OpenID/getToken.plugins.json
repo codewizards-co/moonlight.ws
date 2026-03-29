@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "uK72dcq400kFPHxtMV_v5",
+        "type": "script",
+        "name": null,
+        "code": {
+            "pre_request": "",
+            "post_request": "rf.setEnvVar('openid_token', rf.response.getBodyJSON()?.access_token)\n"
+        },
+        "enabled": true,
+        "createdAt": 1750692877679,
+        "updatedAt": 1760615730685
+    }
+]

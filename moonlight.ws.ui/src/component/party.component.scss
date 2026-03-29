@@ -1,0 +1,97 @@
+mlws-party {
+  .remove-button-checked {
+    background: black;
+    color: white;
+  }
+
+  .remove-button-unchecked {
+  }
+
+  .party-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 10.5cm;
+  }
+
+  .code-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .name-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+
+  .active-checkbox {
+    margin-right: 0.5rem;
+    flex-basis: 100%;
+  }
+
+  .email-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+
+  .phone-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .street1-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+  .street2-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+  .street3-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+
+  .zip-field {
+    width: 3cm;
+    margin-right: 0.5rem;
+  }
+
+  .city-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .region-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .country-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .tax-no-field {
+    width: 6cm;
+    margin-right: 0.5rem;
+  }
+
+  .website-field {
+    width: 8cm;
+    margin-right: 0.5rem;
+  }
+
+  .description-field {
+    width: 100%;
+  }
+
+  .consignee {
+    .to-add {
+      color: darkgreen;
+    }
+    .to-remove {
+      color: red;
+    }
+  }
+}

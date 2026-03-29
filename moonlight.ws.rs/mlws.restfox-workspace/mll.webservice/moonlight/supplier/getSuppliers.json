@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body",
+        "text": ""
+    },
+    "url": "{{mlws_url}}/supplier?fetch=party",
+    "sortOrder": 2,
+    "parameters": [
+        {
+            "name": "fetch",
+            "value": "party"
+        }
+    ],
+    "pathParameters": [],
+    "headers": []
+}

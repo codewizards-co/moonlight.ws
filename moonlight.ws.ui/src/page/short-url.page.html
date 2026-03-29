@@ -1,0 +1,44 @@
+
+<form class="url-form">
+  <mat-form-field class="url-field">
+    <mat-label>URL</mat-label>
+    <input matInput [formControl]="urlFormControl">
+  </mat-form-field>
+</form>
+
+@if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  @if (shortUrl$ | async; as shortUrl) {
+<!--
+    <mlws-short-url [shortUrlId]="shortUrl.id"></mlws-short-url>
+-->
+    Short-URL-mapping:
+    <ul>
+      <li>Long URL: <a href="{{shortUrl.longUrl}}" target="_blank">{{shortUrl.longUrl}}</a></li>
+      <li>Short URL: <a href="{{shortUrl.shortUrl}}" target="_blank">{{shortUrl.shortUrl}}</a></li>
+    </ul>
+    <br>
+    @if (qrCodeImageUrl$|async; as qrCodeImageUrl) {
+      <form class="qr-code-size-form">
+        <mat-form-field class="qr-code-size-field">
+          <mat-label>Size</mat-label>
+          <input matInput type="number" [formControl]="qrCodeSizeFormControl">
+        </mat-form-field>
+      </form>
+      <img src="{{qrCodeImageUrl}}" alt="">
+    }
+  } @else {
+    @if (url$ | async; as url) {
+      @if (urlInvalidMessage$ | async; as urlInvalidMessage) {
+        <b style="color: darkred">Invalid URL: {{url}}<br/>{{urlInvalidMessage}}</b>
+      } @else {
+        No short URL for this URL: {{url}}
+      }
+      <br>
+      <button matButton="elevated" type="button" (click)="onCreateShortUrl()" [disabled]="(createShortUrlDisabled$ | async)">Create short URL</button>
+    } @else {
+      Please enter a URL.
+    }
+  }
+}

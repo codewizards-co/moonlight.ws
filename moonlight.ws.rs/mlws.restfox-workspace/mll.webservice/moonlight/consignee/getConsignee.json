@@ -1,0 +1,21 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/consignee/{id}?fetch=party",
+    "sortOrder": 1,
+    "parameters": [
+        {
+            "name": "fetch",
+            "value": "party"
+        }
+    ],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "1"
+        }
+    ]
+}

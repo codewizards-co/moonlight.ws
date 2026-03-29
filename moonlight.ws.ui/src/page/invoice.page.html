@@ -1,0 +1,5 @@
+@if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <mlws-invoice [invoiceId]="id$ | async"></mlws-invoice>
+}

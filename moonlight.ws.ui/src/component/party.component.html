@@ -1,0 +1,153 @@
+@if (createConsigneeOverlayVisible$|async) {
+  <mlws-add-consignee-overlay [partyId]="partyId" (consigneeAdded$)="consigneeAdded($event)"></mlws-add-consignee-overlay>
+} @else if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  @if (party$ | async; as party) {
+    <form class="party-form">
+      <mat-form-field class="code-field">
+        <mat-label>Code</mat-label>
+        <input matInput name="codeField" [(ngModel)]="party.code">
+      </mat-form-field>
+
+      <mat-form-field class="name-field">
+        <mat-label>Name</mat-label>
+        <input matInput name="nameField" [(ngModel)]="party.name">
+      </mat-form-field>
+
+      <mat-form-field class="email-field">
+        <mat-label>eMail</mat-label>
+        <input matInput name="emailField" [(ngModel)]="party.email">
+      </mat-form-field>
+
+      <mat-form-field  class="phone-field">
+        <mat-label>Phone</mat-label>
+        <input matInput name="phoneField" [(ngModel)]="party.phone">
+      </mat-form-field>
+
+      <mat-form-field class="street1-field">
+        <mat-label>Street 1</mat-label>
+        <input matInput name="street1Field" [(ngModel)]="party.street1">
+      </mat-form-field>
+
+      <mat-form-field class="street2-field">
+        <mat-label>Street 2</mat-label>
+        <input matInput name="street2Field" [(ngModel)]="party.street2">
+      </mat-form-field>
+
+      <mat-form-field class="street3-field">
+        <mat-label>Street 3</mat-label>
+        <input matInput name="street3Field" [(ngModel)]="party.street3">
+      </mat-form-field>
+
+      <mat-form-field class="zip-field">
+        <mat-label>Zip</mat-label>
+        <input matInput name="zipField" [(ngModel)]="party.zip">
+      </mat-form-field>
+
+      <mat-form-field class="city-field">
+        <mat-label>City</mat-label>
+        <input matInput name="cityField" [(ngModel)]="party.city">
+      </mat-form-field>
+
+      <mat-form-field class="region-field">
+        <mat-label>Region/Province/State</mat-label>
+        <mat-select [(value)]="region">
+          @for (region of regions; track region.id) {
+            <mat-option [value]="region">{{ getL10n(region.title_i18n) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="country-field">
+        <mat-label>Country</mat-label>
+        <mat-select [(value)]="country">
+          @for (country of countryService.countries$ | async; track country.id) {
+            <mat-option [value]="country">{{ getL10n(country.title_i18n) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="tax-no-field">
+        <mat-label>Tax-no.</mat-label>
+        <input matInput name="taxNoField" [(ngModel)]="party.taxNo">
+      </mat-form-field>
+
+      <mat-form-field class="website-field">
+        <mat-label>Website</mat-label>
+        <input matInput name="websiteField" [(ngModel)]="party.website">
+      </mat-form-field>
+
+      <mat-form-field class="description-field">
+        <mat-label>Description / Notes</mat-label>
+        <textarea matInput name="descriptionArea"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="10"
+                  [(ngModel)]="party.description"></textarea>
+      </mat-form-field>
+
+      <mat-checkbox name="activeCheckbox" class="active-checkbox"
+                    [(ngModel)]="party.active">active</mat-checkbox>
+
+      <mat-checkbox name="supplierCheckbox" class="supplier-checkbox"
+                    [(ngModel)]="supplier">Supplier</mat-checkbox>
+    </form>
+
+    <br/>
+
+    <div class="consignee">
+      @if (consigneeRows$|async; as consigneeRows) {
+        <h4>Consignee</h4>
+        @if (consigneeRows && consigneeRows.length > 0) {
+          <table mat-table [dataSource]="consigneeRows" [trackBy]="consigneeRowTrackBy" class="mat-elevation-z8">
+<!--
+            <ng-container matColumnDef="warehouseId">
+              <th mat-header-cell *matHeaderCellDef>warehouseId</th>
+              <td mat-cell *matCellDef="let consigneeRow"> {{consigneeRow.warehouseId}} </td>
+            </ng-container>
+-->
+            <ng-container matColumnDef="warehouseLabel">
+              <th mat-header-cell *matHeaderCellDef>Warehouse</th>
+              <td mat-cell *matCellDef="let row"> {{this.warehouseSelectorService.getWarehouseLabel(row.warehouse)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="removeAction">
+              <th mat-header-cell *matHeaderCellDef>Remove</th>
+              <td mat-cell *matCellDef="let row">
+                <button matIconButton="elevated" type="button" [class]="getRemoveButtonClass(row)" (click)="onRemoveConsigneeClick(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="consigneeTableColumnKeys"></tr>
+            <tr mat-row (click)="onConsigneeRowClick(row)" [class]="getConsigneeTableRowClass(row)" *matRowDef="let row; columns: consigneeTableColumnKeys;"></tr>
+          </table>
+        } @else {
+          <div>
+            This party is not a consignee.
+          </div>
+        }
+      }
+      <button matButton="elevated" type="button" (click)="onAddConsigneeClick()">
+        <mat-icon>add</mat-icon>
+        Add consignee
+      </button>
+    </div>
+
+    <br/>
+
+    <div>
+      <button matButton="elevated" type="button" (click)="onSaveClick()" [disabled]="isSaveDisabled()">
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+      <button matButton="elevated" type="button" (click)="onRevertClick()" [disabled]="isRevertDisabled()">
+        <mat-icon>undo</mat-icon>
+        Revert
+      </button>
+    </div>
+  }
+}

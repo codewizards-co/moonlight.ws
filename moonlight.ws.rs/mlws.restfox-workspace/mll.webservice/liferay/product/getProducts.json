@@ -1,0 +1,22 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-catalog/v1.0/products?fields=id,productId,name,skuFormatted",
+    "sortOrder": 1,
+    "parameters": [
+        {
+            "name": "fields",
+            "value": "id,productId,name,skuFormatted",
+            "disabled": false
+        },
+        {
+            "name": "filter",
+            "value": "skus/any(x:x eq 'CABUT310')",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

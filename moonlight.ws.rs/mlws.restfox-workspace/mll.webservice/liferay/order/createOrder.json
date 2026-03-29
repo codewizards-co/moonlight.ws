@@ -1,0 +1,26 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"account\": {\n      \"customFields\": {},\n      \"emailAddress\": \"mn@codewizards.co\",\n      \"externalReferenceCode\": \"3ef66360-83ed-83ed-dd67-dbfc82d3e908\",\n      \"id\": 34057,\n      \"logoId\": 0,\n      \"name\": \"Marco Nguitragool\",\n      \"root\": true,\n      \"taxId\": \"\",\n      \"type\": 1\n    },\n    \"channelId\": 183523,\n    \"currencyCode\": \"THB\",\n    \"orderItems\": [\n        {\n            \"decimalQuantity\": 3,\n            \"deliveryGroup\": \"\",\n            \"discountAmount\": 0,\n            \"discountManuallyAdjusted\": false,\n            \"discountPercentageLevel1\": 0,\n            \"discountPercentageLevel1WithTaxAmount\": 0,\n            \"discountPercentageLevel2\": 0,\n            \"discountPercentageLevel2WithTaxAmount\": 0,\n            \"discountPercentageLevel3\": 0,\n            \"discountPercentageLevel3WithTaxAmount\": 0,\n            \"discountPercentageLevel4\": 0,\n            \"discountPercentageLevel4WithTaxAmount\": 0,\n            \"discountWithTaxAmount\": 0,\n            \"externalReferenceCode\": \"1073c481-2ee3-4b6b-d158-43b9634fc887\",\n            \"finalPrice\": 900,\n            \"finalPriceWithTaxAmount\": 900,\n            \"formattedQuantity\": \"3\",\n            \"id\": 183646,\n            \"name\": {\n                \"en_US\": \"Mango Pralines 180g\",\n                \"th_TH\": \"มะม่วงพราลีน 180กรัม\",\n                \"de_DE\": \"Mango Pralinen 180g\"\n            },\n            \"options\": \"[]\",\n            \"orderExternalReferenceCode\": \"b4021b0f-a830-d80c-6199-3de9959e5371\",\n            \"orderId\": 183643,\n            \"priceManuallyAdjusted\": false,\n            \"printedNote\": \"\",\n            \"promoPrice\": 0,\n            \"promoPriceWithTaxAmount\": 0,\n            \"quantity\": 3,\n            \"replacedSku\": \"\",\n            \"replacedSkuId\": 0,\n            \"shippedQuantity\": 3,\n            \"shippingAddressId\": 0,\n            \"sku\": \"PBMG85\",\n            \"skuExternalReferenceCode\": \"805b5963-b1b7-8509-677b-f96e7bf1699f\",\n            \"skuId\": 142454,\n            \"subscription\": false,\n            \"unitOfMeasure\": \"\",\n            \"unitOfMeasureKey\": \"\",\n            \"unitPrice\": 300,\n            \"unitPriceWithTaxAmount\": 300\n        }\n    ],\n    \"orderStatus\": 0,\n    \"orderTypeId\": 0,\n    \"paymentMethod\": \"money-order\",\n    \"paymentStatus\": 0,\n    \"shippingAddress\": {\n      \"city\": \"@factory\",\n      \"countryISOCode\": \"TH\",\n      \"description\": \"\",\n      \"externalReferenceCode\": \"de5f85e4-ba30-463e-3d12-5495dbeec1c8\",\n      \"id\": 183649,\n      \"latitude\": 0,\n      \"longitude\": 0,\n      \"name\": \"Anonymous\",\n      \"phoneNumber\": \"\",\n      \"regionISOCode\": \"50.0\",\n      \"street1\": \"@factory\",\n      \"street2\": \"\",\n      \"street3\": \"\",\n      \"zip\": \"0\"\n    }\n}"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-order/v1.0/orders",
+    "sortOrder": 1,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "name": "Accept",
+            "value": "application/json"
+        },
+        {
+            "name": "x-csrf-token",
+            "value": "EcGNahry"
+        }
+    ]
+}

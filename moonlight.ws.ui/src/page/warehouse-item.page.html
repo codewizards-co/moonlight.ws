@@ -1,0 +1,16 @@
+<!--
+<mlws-warehouse-selector></mlws-warehouse-selector>
+-->
+@if (loading$|async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <mlws-warehouse-item [warehouseItemId]="id$ | async"></mlws-warehouse-item>
+  @if ((id$ | async) === undefined && (sku$ | async)) {
+    @if (warehouseSelectorService.getSelectedWarehouse$() | async; as warehouse) {
+      The warehouse-item <b>{{sku$ | async}}</b> does not exist in the warehouse <b>{{getL10n(warehouse.name)}} ({{warehouse.countryISOCode}} - {{warehouse.city}})</b>. Do you want to create it now?
+      <p>
+        <button matButton="elevated" type="button" (click)="onCreateWarehouseItem()" [disabled]="creating$ | async">Create warehouse-item</button>
+      </p>
+    }
+  }
+}

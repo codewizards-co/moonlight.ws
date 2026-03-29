@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "No Body",
+        "text": ""
+    },
+    "url": "{{mlws_url}}/warehouse-item-movement-group/{id}/finalize",
+    "sortOrder": 3,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "41"
+        }
+    ],
+    "headers": []
+}

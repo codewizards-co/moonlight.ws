@@ -1,0 +1,497 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="2025-10-22_mh_00" author="mh">
+		<addColumn tableName="WarehouseItemMovement">
+			<column name="unitOfMeasureKey" type="varchar(100)" />
+			<column name="finalized" type="bigint" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="groupId" type="bigint" />
+			<column name="type" type="varchar(4)" defaultValue="INVE">
+				<constraints nullable="false" />
+			</column>
+			<column name="otherWarehouseId" type="bigint" />
+			<column name="otherWarehouseItemId" type="bigint" />
+		</addColumn>
+
+		<sql>update "WarehouseItemMovement" set "finalized" = 1</sql>
+
+
+		<createTable tableName="WarehouseItemMovementGroup">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="finalized" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence
+			sequenceName="WarehouseItemMovementGroupIdSequence" startValue="1"
+			incrementBy="1" cacheSize="10" />
+
+		<addForeignKeyConstraint
+			constraintName="WarehouseItemMovementGroup_fk1"
+			baseTableName="WarehouseItemMovementGroup"
+			baseColumnNames="createdByUserId" referencedTableName="User"
+			referencedColumnNames="id" />
+
+		<addForeignKeyConstraint
+			constraintName="WarehouseItemMovementGroup_fk2"
+			baseTableName="WarehouseItemMovementGroup"
+			baseColumnNames="changedByUserId" referencedTableName="User"
+			referencedColumnNames="id" />
+
+
+		<addForeignKeyConstraint
+			constraintName="WarehouseItemMovement_fk3"
+			baseTableName="WarehouseItemMovement"
+			baseColumnNames="groupId"
+			referencedTableName="WarehouseItemMovementGroup"
+			referencedColumnNames="id" />
+
+		<createIndex tableName="WarehouseItemMovement" indexName="WarehouseItemMovement_idx4">
+			<column name="groupId" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="2025-11-09_mh_00" author="mh">
+		<createTable tableName="Party">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deleted" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deletedByUserId" type="bigint" />
+
+			<column name="code" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="active" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="email" type="varchar(200)" />
+			<column name="phone" type="varchar(50)" />
+
+			<column name="street1" type="varchar(100)" />
+			<column name="street2" type="varchar(100)" />
+			<column name="street3" type="varchar(100)" />
+
+			<column name="zip" type="varchar(20)" />
+			<column name="city" type="varchar(100)" />
+			<column name="region" type="varchar(100)" />
+			<column name="countryIsoCode" type="varchar(3)" />
+
+			<column name="taxNo" type="varchar(50)" />
+
+			<column name="description" type="clob" />
+		</createTable>
+
+		<createSequence sequenceName="PartyIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<createIndex tableName="Party" indexName="Party_uk1" unique="true">
+			<column name="code" />
+			<column name="deleted" />
+		</createIndex>
+
+		<createIndex tableName="Party"
+			indexName="Party_idx1">
+			<column name="active" />
+		</createIndex>
+
+		<createIndex tableName="Party"
+			indexName="Party_idx2">
+			<column name="name" />
+		</createIndex>
+
+		<createIndex tableName="Party"
+			indexName="Party_idx3">
+			<column name="email" />
+		</createIndex>
+		
+		<createTable tableName="Consignee">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deleted" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deletedByUserId" type="bigint" />
+
+			<column name="partyId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="warehouseId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="ConsigneeIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<!-- There is only 0 or 1 Consignee for each warehouse. A warehouse must be associated to not more than one party. -->
+		<createIndex tableName="Consignee" indexName="Consignee_uk1" unique="true">
+			<column name="warehouseId" />
+			<column name="deleted" />
+		</createIndex>
+
+		<addForeignKeyConstraint constraintName="Consignee_fk1"
+			baseTableName="Consignee" baseColumnNames="partyId"
+			referencedTableName="Party" referencedColumnNames="id" />
+
+		<createIndex tableName="Consignee" indexName="Consignee_idx1">
+			<column name="partyId" />
+		</createIndex>
+
+		<createTable tableName="Supplier">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deleted" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deletedByUserId" type="bigint" />
+
+			<column name="partyId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="SupplierIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<!-- There is only 0 or 1 Supplier for each party. This means, either a party is a supplier, or it is not. -->
+		<createIndex tableName="Supplier" indexName="Supplier_uk1" unique="true">
+			<column name="partyId" />
+			<column name="deleted" />
+		</createIndex>
+
+		<addForeignKeyConstraint constraintName="Supplier_fk1"
+			baseTableName="Supplier" baseColumnNames="partyId"
+			referencedTableName="Party" referencedColumnNames="id" />
+
+		<addColumn tableName="WarehouseItemMovement">
+			<column name="supplierId" type="bigint" />
+		</addColumn>
+
+		<addForeignKeyConstraint constraintName="WarehouseItemMovement_fk4"
+			baseTableName="WarehouseItemMovement" baseColumnNames="supplierId"
+			referencedTableName="Supplier" referencedColumnNames="id" />
+
+		<createIndex tableName="WarehouseItemMovement" indexName="WarehouseItemMovement_idx5">
+			<column name="supplierId" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet id="2025-12-08_mh_00" author="mh">
+		<addColumn tableName="WarehouseItemMovement">
+			<column name="priceTotalNet" type="numeric(15, 2)" />
+			<column name="priceTotalGross" type="numeric(15, 2)" />
+			<column name="taxPercent" type="numeric(15, 2)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="2025-12-27_mh_00" author="mh">
+		<createTable tableName="Invoice">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deleted" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deletedByUserId" type="bigint" />
+			
+			<column name="finalized" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="finalizedByUserId" type="bigint" />
+
+			<column name="workflow" type="char(1)">
+				<constraints nullable="false" />
+			</column>
+			<column name="partyId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="orderId" type="bigint" />
+		</createTable>
+
+		<createSequence sequenceName="InvoiceIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<addForeignKeyConstraint constraintName="Invoice_fk1"
+			baseTableName="Invoice" baseColumnNames="partyId"
+			referencedTableName="Party" referencedColumnNames="id" />
+
+		<createIndex tableName="Invoice" indexName="Invoice_idx1" unique="false">
+			<column name="partyId" />
+		</createIndex>
+
+		<createTable tableName="InvoiceItem">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deleted" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="deletedByUserId" type="bigint" />
+			
+			<column name="finalized" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="finalizedByUserId" type="bigint" />
+
+			<column name="invoiceId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="warehouseItemMovementId" type="bigint" />
+			<column name="include" type="char(1)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="priceTotalNet" type="numeric(15, 2)" />
+			<column name="priceTotalGross" type="numeric(15, 2)" />
+			<column name="taxPercent" type="numeric(15, 2)" />
+		</createTable>
+
+		<createSequence sequenceName="InvoiceItemIdSequence"
+			startValue="1" incrementBy="1" cacheSize="1" />
+
+		<createIndex tableName="InvoiceItem" indexName="InvoiceItem_uk1" unique="true">
+			<column name="warehouseItemMovementId" />
+			<column name="deleted" />
+		</createIndex>
+
+		<createIndex tableName="InvoiceItem" indexName="InvoiceItem_idx1" unique="false">
+			<column name="invoiceId" />
+		</createIndex>
+
+		<addForeignKeyConstraint constraintName="InvoiceItem_fk1"
+			baseTableName="InvoiceItem" baseColumnNames="invoiceId"
+			referencedTableName="Invoice" referencedColumnNames="id" />
+
+		<addForeignKeyConstraint constraintName="InvoiceItem_fk2"
+			baseTableName="InvoiceItem" baseColumnNames="warehouseItemMovementId"
+			referencedTableName="WarehouseItemMovement" referencedColumnNames="id" />
+	</changeSet>
+
+	<changeSet id="2025-12-27_mh_01" author="mh">
+		<addColumn tableName="Invoice">
+			<column name="booked" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="2025-12-28_mh_00" author="mh">
+		<addColumn tableName="InvoiceItem">
+			<column name="quantity" type="numeric(15, 2)" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="orderItemId" type="bigint" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="2025-12-29_mh_00" author="mh">
+		<createIndex tableName="WarehouseItemMovement"
+			indexName="WarehouseItemMovement_idx6">
+			<column name="warehouseId" />
+			<column name="type" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="2026-01-05_mh_00" author="mh">
+		<addColumn tableName="Party">
+			<column name="regionCode" type="varchar(20)" />
+			<column name="website" type="varchar(255)" />
+		</addColumn>
+		<dropColumn tableName="Party">
+			<column name="region" />
+		</dropColumn>
+	</changeSet>
+
+	<changeSet id="2026-01-07_mh_00" author="mh">
+		<addColumn tableName="Invoice">
+			<column name="shipmentId" type="bigint" />
+			<column name="includedTotalNet" type="numeric(15, 2)" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="includedTotalGross" type="numeric(15, 2)" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="excludedTotalNet" type="numeric(15, 2)" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="excludedTotalGross" type="numeric(15, 2)" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<addColumn tableName="InvoiceItem">
+			<column name="shipmentItemId" type="bigint" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="2026-01-07_mh_01" author="mh">
+		<sql>
+			update "Invoice" set
+				"includedTotalGross" = (
+					select coalesce(sum(coalesce("priceTotalGross", 0)), 0)
+					from "InvoiceItem"
+					where
+						"InvoiceItem"."invoiceId" = "Invoice"."id"
+						and "InvoiceItem"."deleted" = 0
+						and "InvoiceItem"."include" = 'I' 
+				)
+			;
+
+			update "Invoice" set
+				"includedTotalNet" = (
+					select coalesce(sum(coalesce("priceTotalNet", 0)), 0)
+					from "InvoiceItem"
+					where
+						"InvoiceItem"."invoiceId" = "Invoice"."id"
+						and "InvoiceItem"."deleted" = 0
+						and "InvoiceItem"."include" = 'I' 
+				)
+			;
+
+			update "Invoice" set
+				"excludedTotalGross" = (
+					select coalesce(sum(coalesce("priceTotalGross", 0)), 0)
+					from "InvoiceItem"
+					where
+						"InvoiceItem"."invoiceId" = "Invoice"."id"
+						and "InvoiceItem"."deleted" = 0
+						and "InvoiceItem"."include" = 'X' 
+				)
+			;
+
+			update "Invoice" set
+				"excludedTotalNet" = (
+					select coalesce(sum(coalesce("priceTotalNet", 0)), 0)
+					from "InvoiceItem"
+					where
+						"InvoiceItem"."invoiceId" = "Invoice"."id"
+						and "InvoiceItem"."deleted" = 0
+						and "InvoiceItem"."include" = 'X' 
+				)
+			;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2026-02-03_mh_00" author="mh">
+		<addColumn tableName="Invoice">
+			<column name="markedPaid" type="bigint" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="markedPaidByUserId" type="bigint" />
+			<column name="paid" type="date" />
+		</addColumn>
+
+		<createIndex tableName="Invoice" indexName="Invoice_idx2" unique="false">
+			<column name="finalized" />
+		</createIndex>
+
+		<createIndex tableName="Invoice" indexName="Invoice_idx3" unique="false">
+			<column name="booked" />
+		</createIndex>
+
+		<createIndex tableName="Invoice" indexName="Invoice_idx4" unique="false">
+			<column name="markedPaid" />
+		</createIndex>
+
+		<createIndex tableName="Invoice" indexName="Invoice_idx5" unique="false">
+			<column name="paid" />
+		</createIndex>
+	</changeSet>
+
+</databaseChangeLog>

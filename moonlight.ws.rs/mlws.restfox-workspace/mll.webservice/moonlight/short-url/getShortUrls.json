@@ -1,0 +1,62 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/short-url",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "filter.code",
+            "value": "*9",
+            "disabled": true
+        },
+        {
+            "name": "filter.createdFromIncl",
+            "value": "2025-09-06T08:28:41.026835Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.createdToIncl",
+            "value": "2025-09-06T08:28:41.026835Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.createdToExcl",
+            "value": "2025-09-06T08:28:41.026835Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.changedFromIncl",
+            "value": "2025-09-06T08:28:41.026837Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.changedToExcl",
+            "value": "2025-09-07T06:33:47.816155Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.changedToIncl",
+            "value": "2025-09-07T06:33:47.816155Z",
+            "disabled": true
+        },
+        {
+            "name": "filter.longUrl",
+            "value": "https://ponghorsepark.synology.me",
+            "disabled": true
+        },
+        {
+            "name": "pageNumber",
+            "value": "2",
+            "disabled": true
+        },
+        {
+            "name": "pageSize",
+            "value": "2",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

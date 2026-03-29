@@ -1,0 +1,26 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"accountExternalReferenceCode\": \"b542a4da-98e3-f428-ba05-903f5ff4e5f8\",\n  \"accountId\": 45085,\n  \"advanceStatus\": \"\",\n  \"billingAddressExternalReferenceCode\": \"95e6dd92-8985-7c85-87cd-e69bba60c607\",\n  \"billingAddressId\": 190770,\n  \"channelExternalReferenceCode\": \"2f327197-1f3a-b426-9169-1d4d70dcc653\",\n  \"channelId\": 183523,\n  \"couponCode\": \"\",\n  \"createDate\": \"2025-12-27T13:26:50Z\",\n  \"creatorEmailAddress\": \"daemon_moonlight@dragonkingchocolate.com\",\n  \"currencyCode\": \"THB\",\n  \"currencyExternalReferenceCode\": \"eeebcf2f-7f2b-809f-7a79-768af7500db9\",\n  \"currencyId\": 34532,\n  \"customFields\": {\n    \"moonlight_invoiceArchivedDate\": \"\",\n    \"moonlight_cancelingInvoiceId\": 0,\n    \"moonlight_cancelingInvoiceArchivedDate\": \"\",\n    \"moonlight_cancelingInvoiceCreatedDate\": \"\",\n    \"moonlight_invoiceCreatedDate\": \"\",\n    \"moonlight_invoiceId\": 0\n  },\n  \"deliveryTermDescription\": \"\",\n  \"deliveryTermId\": 0,\n  \"deliveryTermName\": \"\",\n  \"name\": \"\",\n  \"orderStatus\": 1,\n  \"orderStatusInfo\": {\n    \"code\": 1,\n    \"label\": \"pending\",\n    \"label_i18n\": \"Pending\"\n  },\n  \"orderTypeId\": 0,\n  \"paymentMethod\": \"money-order\",\n  \"paymentStatus\": 1,\n  \"paymentStatusInfo\": {\n    \"code\": 1,\n    \"label\": \"pending\",\n    \"label_i18n\": \"Pending\"\n  },\n  \"paymentTermDescription\": \"\",\n  \"paymentTermId\": 0,\n  \"paymentTermName\": \"\",\n  \"printedNote\": \"\",\n  \"purchaseOrderNumber\": \"\",\n  \"shippable\": true,\n  \"shippingAddressExternalReferenceCode\": \"0a3adff7-ce87-0ad0-473c-50efb123337a\",\n  \"shippingAddressId\": 190772,\n  \"shippingAmount\": 0,\n  \"shippingAmountFormatted\": \"฿0.00\",\n  \"shippingAmountValue\": 0,\n  \"shippingDiscountAmount\": 0,\n  \"shippingDiscountAmountFormatted\": \"฿0.00\",\n  \"shippingDiscountPercentageLevel1\": 0,\n  \"shippingDiscountPercentageLevel1WithTaxAmount\": 0,\n  \"shippingDiscountPercentageLevel2\": 0,\n  \"shippingDiscountPercentageLevel2WithTaxAmount\": 0,\n  \"shippingDiscountPercentageLevel3\": 0,\n  \"shippingDiscountPercentageLevel3WithTaxAmount\": 0,\n  \"shippingDiscountPercentageLevel4\": 0,\n  \"shippingDiscountPercentageLevel4WithTaxAmount\": 0,\n  \"shippingDiscountWithTaxAmount\": 0,\n  \"shippingDiscountWithTaxAmountFormatted\": \"฿0.00\",\n  \"shippingOption\": \"\",\n  \"shippingWithTaxAmountFormatted\": \"฿0.00\",\n  \"shippingWithTaxAmountValue\": 0,\n  \"subtotalAmount\": 379,\n  \"subtotalDiscountAmount\": 0,\n  \"subtotalDiscountAmountFormatted\": \"฿0.00\",\n  \"subtotalDiscountPercentageLevel1\": 0,\n  \"subtotalDiscountPercentageLevel1WithTaxAmount\": 0,\n  \"subtotalDiscountPercentageLevel2\": 0,\n  \"subtotalDiscountPercentageLevel2WithTaxAmount\": 0,\n  \"subtotalDiscountPercentageLevel3\": 0,\n  \"subtotalDiscountPercentageLevel3WithTaxAmount\": 0,\n  \"subtotalDiscountPercentageLevel4\": 0,\n  \"subtotalDiscountPercentageLevel4WithTaxAmount\": 0,\n  \"subtotalDiscountWithTaxAmount\": 0,\n  \"subtotalDiscountWithTaxAmountFormatted\": \"฿0.00\",\n  \"subtotalFormatted\": \"฿379.00\",\n  \"subtotalWithTaxAmountFormatted\": \"฿379.00\",\n  \"subtotalWithTaxAmountValue\": 379,\n  \"taxAmount\": 0,\n  \"taxAmountFormatted\": \"฿0.00\",\n  \"taxAmountValue\": 0,\n  \"total\": 379,\n  \"totalAmount\": 379,\n  \"totalDiscountAmount\": 0,\n  \"totalDiscountAmountFormatted\": \"฿0.00\",\n  \"totalDiscountPercentageLevel1\": 0,\n  \"totalDiscountPercentageLevel1WithTaxAmount\": 0,\n  \"totalDiscountPercentageLevel2\": 0,\n  \"totalDiscountPercentageLevel2WithTaxAmount\": 0,\n  \"totalDiscountPercentageLevel3\": 0,\n  \"totalDiscountPercentageLevel3WithTaxAmount\": 0,\n  \"totalDiscountPercentageLevel4\": 0,\n  \"totalDiscountPercentageLevel4WithTaxAmount\": 0,\n  \"totalDiscountWithTaxAmount\": 0,\n  \"totalDiscountWithTaxAmountFormatted\": \"฿0.00\",\n  \"totalFormatted\": \"฿379.00\",\n  \"totalWithTaxAmountFormatted\": \"฿379.00\",\n  \"totalWithTaxAmountValue\": 379,\n  \"transactionId\": \"\",\n  \"workflowStatusInfo\": {\n    \"code\": 0,\n    \"label\": \"approved\",\n    \"label_i18n\": \"Approved\"\n  }\n}"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-order/v1.0/orders",
+    "sortOrder": 2,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "name": "Accept",
+            "value": "application/json"
+        },
+        {
+            "name": "x-csrf-token",
+            "value": "EcGNahry"
+        }
+    ]
+}

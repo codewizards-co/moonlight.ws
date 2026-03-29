@@ -1,0 +1,57 @@
+mlws-invoice {
+  .remove-button-checked {
+    background: black;
+    color: white;
+  }
+
+  .remove-button-unchecked {
+  }
+
+  .party-field {
+    width: 10cm;
+    margin-right: 0.5rem;
+  }
+  .workflow-field {
+    width: 4cm;
+    margin-right: 0.5rem;
+  }
+  .orderId-field {
+    width: 4cm;
+    margin-right: 0.5rem;
+  }
+
+  .description-field {
+    width: 10cm;
+    /*margin-right: 0.5rem;*/
+  }
+
+
+  .invoice-item {
+    .to-add {
+      color: darkgreen;
+    }
+    .to-remove {
+      color: red;
+    }
+  }
+
+  .mat-column-quantity {
+    text-align: right;
+  }
+
+  .mat-column-priceSingleGross {
+    text-align: right;
+  }
+
+  .mat-column-priceSingleNet {
+    text-align: right;
+  }
+
+  .mat-column-priceTotalGross {
+    text-align: right;
+  }
+
+  .mat-column-priceTotalNet {
+    text-align: right;
+  }
+}

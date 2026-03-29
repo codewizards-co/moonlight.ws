@@ -1,0 +1,23 @@
+<h1>Create supplier</h1>
+
+<mat-form-field class="code-field">
+  <mat-label>Code</mat-label>
+  <input matInput name="code" [(ngModel)]="supplier.party.code">
+</mat-form-field>
+
+<mat-form-field class="name-field">
+  <mat-label>Name</mat-label>
+  <input matInput name="name" [(ngModel)]="supplier.party.name">
+</mat-form-field>
+
+<br/>
+
+<button matButton="elevated" type="button" (click)="onSaveClick()">
+  <mat-icon>save</mat-icon>
+  Save
+</button>
+
+<button matButton="elevated" type="button" (click)="onCancelClick()">
+  <mat-icon>cancel</mat-icon>
+  Cancel
+</button>

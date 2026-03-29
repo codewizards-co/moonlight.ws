@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"longUrl\": \"https://stackoverflow.com/questions/4009388/inject-list-of-objects-in-cdi-weld\",\n    \"shortUrl\": \"https://dkc.bio/r/2yan\"\n}"
+    },
+    "url": "{{mlws_url}}/short-url",
+    "sortOrder": 5,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}

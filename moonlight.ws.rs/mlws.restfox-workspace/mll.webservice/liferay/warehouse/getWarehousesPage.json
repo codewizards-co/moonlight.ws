@@ -1,0 +1,28 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-inventory/v1.0/warehouses",
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "X-Liferay-Auth-Token",
+            "value": "{{openid_token}}",
+            "disabled": true
+        },
+        {
+            "name": "x-csrf-token",
+            "value": "{{openid_token}}",
+            "disabled": true
+        },
+        {
+            "name": "Authorization",
+            "value": "Bearer {{openid_token}}",
+            "disabled": true
+        }
+    ]
+}

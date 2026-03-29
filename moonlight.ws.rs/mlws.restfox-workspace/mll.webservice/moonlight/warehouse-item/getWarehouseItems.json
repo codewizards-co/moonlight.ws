@@ -1,0 +1,32 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item?filter.sku=RAWCHOC70&filter.warehouseId=34549",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "filter.sku",
+            "value": "RAWCHOC70",
+            "disabled": false
+        },
+        {
+            "name": "filter.warehouseId",
+            "value": "34549",
+            "disabled": false
+        },
+        {
+            "name": "filter.warehouseId",
+            "value": "32384",
+            "disabled": true
+        },
+        {
+            "name": "filter.sku",
+            "value": "/capo.*/i",
+            "disabled": true
+        }
+    ],
+    "pathParameters": []
+}

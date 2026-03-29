@@ -1,0 +1,57 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/short-url/by-url/{url}",
+    "sortOrder": 1,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "url",
+            "value": "https%3A%2F%2Fdkc.bio%2Fp%2Fmango-250g",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https://dragonkingchocolate.com:1443/liferay/en/web/dkc/p/xxx-mango-250g",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https://dragonkingchocolate.com/liferay/en/web/dkc/p/xxx-mango-250g",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https://dkc.bio/r/2yan",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https://stackoverflow.com/questions/4009388/inject-list-of-objects-in-cdi-weld",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https:%2F%2Fdkc.bio%2Fp",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https:%2F%2Fdragonkingchocolate.com:1443%2Fliferay%2Fweb%2Fdkc%2Fproducts",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https:%2F%2Fdkc.bio%2Fp%2F",
+            "disabled": true
+        },
+        {
+            "name": "url",
+            "value": "https:%2F%2Fdragonkingchocolate.com:1443%2Fliferay%2Fweb%2Fdkc%2Fproducts%2F",
+            "disabled": true
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"invoice\": { \"id\": 2},\n    \"include\": \"INCLUDE\",\n    \"warehouseItemMovement\": { \"id\": 99}\n}"
+    },
+    "url": "{{mlws_url}}/invoice-item",
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ],
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": []
+}

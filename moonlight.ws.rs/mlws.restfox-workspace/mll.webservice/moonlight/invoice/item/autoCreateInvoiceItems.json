@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"invoice\": { \"id\": 4}\n}"
+    },
+    "url": "{{mlws_url}}/invoice-item/auto-create",
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ],
+    "sortOrder": 1,
+    "parameters": [],
+    "pathParameters": []
+}

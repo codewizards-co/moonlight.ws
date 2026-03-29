@@ -1,0 +1,9 @@
+{
+    "sortOrder": 2,
+    "currentEnvironment": "Default",
+    "authentication": {
+        "type": "basic",
+        "username": "USER",
+        "password": "PASSWORD"
+    }
+}

@@ -1,0 +1,35 @@
+<mat-radio-group class="total-single-mode-radio-group" [(ngModel)]="totalSingleMode">
+    @for (tsMode of Object.keys(TotalSingleMode); track tsMode) {
+        <mat-radio-button class="total-single-mode-radio-button" [value]="tsMode">
+            {{ tsMode }}
+        </mat-radio-button>
+    }
+</mat-radio-group>
+
+<mat-radio-group class="tax-mode-radio-group" [(ngModel)]="taxMode">
+    @for (taxMode of Object.keys(TaxMode); track taxMode) {
+        <mat-radio-button class="tax-mode-radio-button" [value]="taxMode">
+            {{ taxMode }}
+        </mat-radio-button>
+    }
+</mat-radio-group>
+
+<mat-form-field class="price-field">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" [(ngModel)]="priceInput">
+</mat-form-field>
+
+<!--
+<mat-form-field class="tax-percent-field">
+    <mat-label>Tax %</mat-label>
+    <input matInput type="number" [(ngModel)]="taxPercent">
+</mat-form-field>
+-->
+<mat-form-field class="tax-percent-field">
+    <mat-label>Tax %</mat-label>
+    <mat-select [(value)]="taxPercent" >
+        @for (taxPercentage of taxPercentages; track taxPercentage) {
+            <mat-option [value]="taxPercentage">{{taxPercentage}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>

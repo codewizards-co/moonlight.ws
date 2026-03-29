@@ -1,0 +1,16 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/country?filter.active=true",
+    "sortOrder": 0,
+    "parameters": [
+        {
+            "name": "filter.active",
+            "value": "true"
+        }
+    ],
+    "pathParameters": []
+}

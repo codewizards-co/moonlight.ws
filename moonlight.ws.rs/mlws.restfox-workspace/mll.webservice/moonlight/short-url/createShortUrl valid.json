@@ -1,0 +1,18 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"longUrl\": \"https://dragonkingchocolate.com:1443/liferay/en/web/dkc/p/xxx-mango-250g\"\n}"
+    },
+    "url": "{{mlws_url}}/short-url",
+    "sortOrder": 4,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item-movement/admin/sync-sku",
+    "sortOrder": 7,
+    "parameters": [],
+    "pathParameters": []
+}

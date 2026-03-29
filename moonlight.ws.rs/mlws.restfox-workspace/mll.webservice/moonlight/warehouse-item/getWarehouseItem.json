@@ -1,0 +1,32 @@
+{
+    "_type": "request",
+    "method": "GET",
+    "body": {
+        "mimeType": "No Body"
+    },
+    "url": "{{mlws_url}}/warehouse-item/{id}",
+    "sortOrder": 1,
+    "parameters": [
+        {
+            "name": "filter.sku",
+            "value": "CAPOW200",
+            "disabled": true
+        },
+        {
+            "name": "filter.warehouseId",
+            "value": "32384",
+            "disabled": true
+        },
+        {
+            "name": "filter.sku",
+            "value": "/capo.*/i",
+            "disabled": true
+        }
+    ],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "40958"
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+        https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+	version="3.0">
+
+	<persistence-unit name="MoonlightPU">
+		<!-- We do *not* specify the classes here, but use automatic detection. 
+			We could alternatively declare them here: 
+		<class>moonlight.ws.persistence.CurrencyEntity</class> 
+		<class>moonlight.ws.persistence.PersonEntity</class>
+		<class>moonlight.ws.persistence.ProductEntity</class> 
+		<exclude-unlisted-classes/>
+		-->
+		<!--
+		<provider>org.datanucleus.api.jakarta.PersistenceProviderImpl</provider>
+		-->
+		
+		<jta-data-source>java:jboss/datasources/MoonlightDS</jta-data-source>
+		
+		<properties>
+			<!-- We do *not* use a WildFly/JBoss-module, but we bundle DataNucleus instead.
+			<property name="jboss.as.jpa.providerModule" value="application"/>
+			-->
+			<property name="jakarta.persistence.transactionType" value="JTA"/>
+			<!--
+			<property name="jakarta.persistence.jtaDataSource" value="java:jboss/datasources/MoonlightDS" />
+			-->
+			
+			<property name="hibernate.physical_naming_strategy" value="moonlight.ws.hibernate.PreserveCasePhysicalNamingStrategy"/>
+		</properties>
+	</persistence-unit>
+</persistence>
+

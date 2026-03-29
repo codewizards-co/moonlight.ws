@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+          color: (
+                  primary: mat.$violet-palette,
+                  tertiary: mat.$orange-palette,
+                  theme-type: light,
+          ),
+          typography: Roboto,
+          density: 0
+  ));
+}
+
+button {
+  margin: 5px;
+}
+
+body {
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+
+.swal-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.mat-mdc-header-row {
+  background-color: var(--mat-sys-primary-container) !important;
+}
+
+.mat-mdc-footer-row {
+  font-weight: bold !important;
+  background-color: var(--mat-sys-primary-container) !important;
+}

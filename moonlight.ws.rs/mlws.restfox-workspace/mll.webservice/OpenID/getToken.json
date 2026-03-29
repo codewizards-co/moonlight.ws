@@ -1,0 +1,49 @@
+{
+    "_type": "request",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/x-www-form-urlencoded",
+        "params": [
+            {
+                "name": "grant_type",
+                "value": "password",
+                "disabled": false
+            },
+            {
+                "name": "client_id",
+                "value": "{{openid_clientId}}"
+            },
+            {
+                "name": "username",
+                "value": "{{username}}"
+            },
+            {
+                "name": "password",
+                "value": "{{password}}"
+            },
+            {
+                "name": "grant_type",
+                "value": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                "disabled": true
+            }
+        ]
+    },
+    "url": "{{openid_url}}/realms/{{openid_realm}}/protocol/openid-connect/token",
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+        },
+        {
+            "name": "Accept",
+            "value": "application/json",
+            "disabled": false
+        }
+    ],
+    "authentication": {
+        "type": "No Auth"
+    }
+}
