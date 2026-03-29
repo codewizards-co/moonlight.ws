@@ -29,8 +29,6 @@ jobs:
         cache: maven
     - name: Build backend with Maven
       run: mvn -B package --file moonlight.ws.rs/pom.xml
-    - name: Build frontend with Maven
-      run: mvn -B package --file moonlight.ws.ui/pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
