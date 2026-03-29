@@ -5,11 +5,11 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
-# only to trigger new build
 
 name: Java/Maven- & NPM-Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "master" ]
   pull_request:
