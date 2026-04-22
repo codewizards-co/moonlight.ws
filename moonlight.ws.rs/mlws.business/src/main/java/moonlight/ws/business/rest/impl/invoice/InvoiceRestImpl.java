@@ -224,7 +224,7 @@ public class InvoiceRestImpl implements InvoiceRest {
 	}
 
 	private void assertCanFinalize(@NonNull InvoiceEntity invoice) {
-		requireNonNull(invoice.getParty().getId(), "invoice.party().id");
+		requireNonNull(invoice.getParty().getId(), "invoice.party.id");
 
 		Map<String, BigDecimal> sku2quantity = new HashMap<>();
 		Map<String, BigDecimal> sku2priceTotalGross = new HashMap<>();
