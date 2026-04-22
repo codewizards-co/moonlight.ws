@@ -253,76 +253,76 @@ public class InvoiceRestImpl implements InvoiceRest {
 
 		switch (invoice.getWorkflow()) {
 			case CONSIGNEE:
-				if (priceTotalGross[0].compareTo(BigDecimal.ZERO) < 0) {
-					String msg = "Invoice[id=%d] with workflow CONSIGNEE must have a positive total gross (or 0), but it is negative!"
+				if (priceTotalGross[0].compareTo(BigDecimal.ZERO) <= 0) {
+					String msg = "Invoice[id=%d] with workflow CONSIGNEE must have a positive total gross, but it is negative (or 0)!"
 							.formatted(invoice.getId());
 					log.error(msg);
 					throw new BadRequestException(msg);
 				}
-				if (priceTotalNet[0].compareTo(BigDecimal.ZERO) < 0) {
-					String msg = "Invoice[id=%d] with workflow CONSIGNEE must have a positive total net (or 0), but it is negative!"
+				if (priceTotalNet[0].compareTo(BigDecimal.ZERO) <= 0) {
+					String msg = "Invoice[id=%d] with workflow CONSIGNEE must have a positive total net, but it is negative (or 0)!"
 							.formatted(invoice.getId());
 					log.error(msg);
 					throw new BadRequestException(msg);
 				}
 				sku2quantity.forEach((sku, quantity) -> {
-					if (quantity.compareTo(BigDecimal.ZERO) < 0) {
-						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of quantity for sku=%s must be positive (or 0), but it is negative!"
-								.formatted(invoice.getId());
+					if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
+						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of quantity for sku=%s must be positive, but it is negative (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
 				});
 				sku2priceTotalGross.forEach((sku, priceTotal) -> {
-					if (priceTotal.compareTo(BigDecimal.ZERO) < 0) {
-						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of priceTotalGross for sku=%s must be positive (or 0), but it is negative!"
-								.formatted(invoice.getId());
+					if (priceTotal.compareTo(BigDecimal.ZERO) <= 0) {
+						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of priceTotalGross for sku=%s must be positive, but it is negative (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
 				});
 				sku2priceTotalNet.forEach((sku, priceTotal) -> {
-					if (priceTotal.compareTo(BigDecimal.ZERO) < 0) {
-						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of priceTotalNet for sku=%s must be positive (or 0), but it is negative!"
-								.formatted(invoice.getId());
+					if (priceTotal.compareTo(BigDecimal.ZERO) <= 0) {
+						String msg = "Invoice[id=%d] with workflow CONSIGNEE and sum of priceTotalNet for sku=%s must be positive, but it is negative (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
 				});
 				break;
 			case SUPPLIER:
-				if (priceTotalGross[0].compareTo(BigDecimal.ZERO) > 0) {
-					String msg = "Invoice[id=%d] with workflow SUPPLIER must have a negative total gross (or 0), but it is positive!"
+				if (priceTotalGross[0].compareTo(BigDecimal.ZERO) >= 0) {
+					String msg = "Invoice[id=%d] with workflow SUPPLIER must have a negative total gross, but it is positive (or 0)!"
 							.formatted(invoice.getId());
 					log.error(msg);
 					throw new BadRequestException(msg);
 				}
-				if (priceTotalNet[0].compareTo(BigDecimal.ZERO) > 0) {
-					String msg = "Invoice[id=%d] with workflow SUPPLIER must have a negative total net (or 0), but it is positive!"
+				if (priceTotalNet[0].compareTo(BigDecimal.ZERO) >= 0) {
+					String msg = "Invoice[id=%d] with workflow SUPPLIER must have a negative total net, but it is positive (or 0)!"
 							.formatted(invoice.getId());
 					log.error(msg);
 					throw new BadRequestException(msg);
 				}
 				sku2quantity.forEach((sku, quantity) -> {
-					if (quantity.compareTo(BigDecimal.ZERO) > 0) {
-						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of quantity for sku=%s must be negative (or 0), but it is positive!"
-								.formatted(invoice.getId());
+					if (quantity.compareTo(BigDecimal.ZERO) >= 0) {
+						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of quantity for sku=%s must be negative, but it is positive (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
 				});
 				sku2priceTotalGross.forEach((sku, priceTotal) -> {
-					if (priceTotal.compareTo(BigDecimal.ZERO) > 0) {
-						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of priceTotalGross for sku=%s must be negative (or 0), but it is positive!"
-								.formatted(invoice.getId());
+					if (priceTotal.compareTo(BigDecimal.ZERO) >= 0) {
+						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of priceTotalGross for sku=%s must be negative, but it is positive (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
 				});
 				sku2priceTotalNet.forEach((sku, priceTotal) -> {
-					if (priceTotal.compareTo(BigDecimal.ZERO) > 0) {
-						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of priceTotalNet for sku=%s must be negative (or 0), but it is positive!"
-								.formatted(invoice.getId());
+					if (priceTotal.compareTo(BigDecimal.ZERO) >= 0) {
+						String msg = "Invoice[id=%d] with workflow SUPPLIER and sum of priceTotalNet for sku=%s must be negative, but it is positive (or 0)!"
+								.formatted(invoice.getId(), sku);
 						log.error(msg);
 						throw new BadRequestException(msg);
 					}
