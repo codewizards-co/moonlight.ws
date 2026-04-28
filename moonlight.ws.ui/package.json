@@ -1,6 +1,6 @@
 {
   "name": "@moonlight.ws.ui/source",
-  "version": "2.5.4-SNAPSHOT",
+  "version": "2.5.5-SNAPSHOT",
   "license": "MIT",
   "scripts": {
     "start": "nx serve",

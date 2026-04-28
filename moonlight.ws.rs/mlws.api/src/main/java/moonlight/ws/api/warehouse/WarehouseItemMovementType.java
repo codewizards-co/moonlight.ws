@@ -77,6 +77,14 @@ public enum WarehouseItemMovementType {
 	SALE("SALE"),
 
 	/**
+	 * Goods were taken out as sample.
+	 * <p>
+	 * Most samples are used for advertising, i.e. given to potential customers. But
+	 * samples may be taken for other purposes, too. For example for lab-analysis.
+	 */
+	SAMPLE("SAMP"),
+
+	/**
 	 * Goods were damaged so that they cannot be sold or processed, anymore. The
 	 * cause of this may be just time or some moulder or any events like a flood.
 	 */
