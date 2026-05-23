@@ -12,6 +12,10 @@ export interface WarehouseItemMovement {
     warehouseItemId?: number;
     warehouseItemErc?: string;
     sku?: string;
+    /**
+     * The list of products related to the SKU of this warehouse-item's movement.
+     * Resolved only when {@code fetch} contains {@code products}.
+     */
     products?: WarehouseItemProduct[];
     warehouseId?: number;
     warehouseErc?: string;

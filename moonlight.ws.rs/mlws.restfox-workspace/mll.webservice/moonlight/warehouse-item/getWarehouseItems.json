@@ -4,13 +4,13 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{mlws_url}}/warehouse-item?filter.sku=RAWCHOC70&filter.warehouseId=34549",
+    "url": "{{mlws_url}}/warehouse-item?filter.warehouseId=34549&fetch=products&filter.productName=/.*fein.*/i",
     "sortOrder": 0,
     "parameters": [
         {
             "name": "filter.sku",
             "value": "RAWCHOC70",
-            "disabled": false
+            "disabled": true
         },
         {
             "name": "filter.warehouseId",
@@ -26,6 +26,15 @@
             "name": "filter.sku",
             "value": "/capo.*/i",
             "disabled": true
+        },
+        {
+            "name": "fetch",
+            "value": "products",
+            "disabled": false
+        },
+        {
+            "name": "filter.productName",
+            "value": "/.*fein.*/i"
         }
     ],
     "pathParameters": []

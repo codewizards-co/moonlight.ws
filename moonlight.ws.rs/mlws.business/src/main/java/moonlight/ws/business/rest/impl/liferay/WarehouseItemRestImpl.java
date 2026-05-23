@@ -1,13 +1,18 @@
 package moonlight.ws.business.rest.impl.liferay;
 
 import static java.util.Objects.*;
+import static moonlight.ws.api.RestConst.*;
+import static moonlight.ws.base.util.FetchUtil.*;
+import static moonlight.ws.base.util.JsonUtil.*;
 import static moonlight.ws.base.util.SortUtil.*;
 import static moonlight.ws.base.util.StringUtil.*;
 import static moonlight.ws.business.util.FilterUtil.*;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +29,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.QueryParam;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.Filter;
@@ -31,6 +37,7 @@ import moonlight.ws.api.liferay.LiferayDtoPage;
 import moonlight.ws.api.liferay.WarehouseItemDto;
 import moonlight.ws.api.liferay.WarehouseItemFilter;
 import moonlight.ws.api.liferay.WarehouseItemRest;
+import moonlight.ws.api.warehouse.WarehouseItemProductDto;
 import moonlight.ws.liferay.LiferayResourceFactory;
 
 @RequestScoped
@@ -44,14 +51,20 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 	@Inject
 	private WarehouseItemCache warehouseItemCache;
 
+	@Inject
+	private SkuCache skuCache;
+
+	@QueryParam(QUERY_FETCH)
+	protected String fetch;
+
 	@Override
-	public WarehouseItem getWarehouseItem(@NonNull Long id) throws Exception {
+	public WarehouseItemDto getWarehouseItem(@NonNull Long id) throws Exception {
 		WarehouseItemResource resource = liferayResourceFactory.getResource(WarehouseItemResource.class);
-		return resource.getWarehouseItem(id);
+		return fetchRelations(toWarehouseItemDto(resource.getWarehouseItem(id)));
 	}
 
 	@Override
-	public LiferayDtoPage<WarehouseItem> getWarehouseItemsPage(@NonNull WarehouseItemFilter filter) throws Exception {
+	public LiferayDtoPage<WarehouseItemDto> getWarehouseItemsPage(@NonNull WarehouseItemFilter filter) throws Exception {
 		Long warehouseId = filter.getFilterWarehouseId();
 		if (warehouseId == null) {
 			throw new BadRequestException("filter.warehouseId is required!");
@@ -60,19 +73,30 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 		WarehouseItemResource resource = liferayResourceFactory.getResource(WarehouseItemResource.class);
 
 		String sku = filter.getFilterSku();
+		String productName = filter.getFilterProductName();
 		Map<String, Boolean> propName2Descending = getSortPropName2DescendingMap(filter);
-		if (!isEmpty(sku) || !propName2Descending.isEmpty()) {
-			Pattern pattern = getPatternIfRegex(sku);
+		if (!isEmpty(sku) || !isEmpty(productName) || !propName2Descending.isEmpty()) {
+			Pattern skuPattern = getPatternIfRegex(sku);
+			Pattern productNamePattern = getPatternIfRegex(productName);
 			Stream<WarehouseItem> warehouseItemsFilteredStream = warehouseItemCache.getWarehouseItems(warehouseId)
 					.stream();
 			if (!isEmpty(sku)) {
-				if (pattern == null) {
+				if (skuPattern == null) {
 					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
 							.filter(whi -> equalsFilterValue(whi, WarehouseItem::getSku, sku));
 
 				} else {
 					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-							.filter(whi -> matchesFilterValue(whi, WarehouseItem::getSku, pattern));
+							.filter(whi -> matchesFilterValue(whi, WarehouseItem::getSku, skuPattern));
+				}
+			}
+			if (!isEmpty(productName)) {
+				if (productNamePattern == null) {
+					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
+							.filter(whi -> equalsFilterValue(whi, whi2 -> _getProductNames(whi2), productName));
+				} else {
+					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
+							.filter(whi -> matchesFilterValueI18n(whi, whi2 -> _getProductNames(whi2), productNamePattern));
 				}
 			}
 			if (!propName2Descending.isEmpty()) {
@@ -81,9 +105,9 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 			}
 			List<WarehouseItem> warehouseItemsFiltered = warehouseItemsFilteredStream //
 					.collect(Collectors.toList());
-			return LiferayDtoPage.of(warehouseItemsFiltered, filter);
+			return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(warehouseItemsFiltered, filter)));
 		}
-		return LiferayDtoPage.of(resource.getWarehouseIdWarehouseItemsPage(warehouseId, filter.getPagination()));
+		return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(resource.getWarehouseIdWarehouseItemsPage(warehouseId, filter.getPagination()))));
 	}
 
 	private static class WarehouseItemComparator implements Comparator<WarehouseItem> {
@@ -137,7 +161,7 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 	}
 
 	@Override
-	public WarehouseItem createWarehouseItem(@NonNull WarehouseItemDto warehouseItem) throws Exception {
+	public WarehouseItemDto createWarehouseItem(@NonNull WarehouseItemDto warehouseItem) throws Exception {
 		if (warehouseItem.getWarehouseId() == null) {
 			throw new BadRequestException("warehouseId missing/empty!");
 		}
@@ -150,7 +174,7 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 		WarehouseItemResource resource = liferayResourceFactory.getResource(WarehouseItemResource.class);
 		var newWarehouseItem = resource.postWarehouseIdWarehouseItem(warehouseItem.getWarehouseId(), warehouseItem);
 		warehouseItemCache.clear(newWarehouseItem.getWarehouseId());
-		return newWarehouseItem;
+		return fetchRelations(toWarehouseItemDto(newWarehouseItem));
 	}
 
 	protected WarehouseItem findWarehouseItemBySkuInAnyWarehouse(@NonNull String sku) throws Exception {
@@ -173,5 +197,65 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 				throw new BadRequestException("sku unknown: " + sku);
 			}
 		}
+	}
+
+	protected LiferayDtoPage<WarehouseItemDto> toWarehouseItemDtoPage(@NonNull LiferayDtoPage<WarehouseItem> page) {
+		LiferayDtoPage<WarehouseItemDto> resultPage = jsonClone(page, WarehouseItemDto.class);
+		return resultPage;
+	}
+
+	protected WarehouseItemDto toWarehouseItemDto(WarehouseItem warehouseItem) {
+		return jsonClone(warehouseItem, WarehouseItemDto.class);
+	}
+
+	protected @NonNull LiferayDtoPage<WarehouseItemDto> fetchRelations(@NonNull LiferayDtoPage<WarehouseItemDto> dtoPage)
+			throws Exception {
+		if (!isEmpty(fetch)) {
+			for (var dto : dtoPage.getItems()) {
+				fetchRelations(dto);
+			}
+		}
+		return dtoPage;
+	}
+
+	protected @NonNull WarehouseItemDto fetchRelations(@NonNull WarehouseItemDto dto) throws Exception {
+		if (!isEmpty(fetch)) {
+			Set<String> fetchSet = getFetchSet(fetch);
+			if (fetchSet.contains("products")) {
+				fetchProducts(dto);
+			}
+		}
+		return dto;
+	}
+
+	protected void fetchProducts(@NonNull WarehouseItemDto dto) throws Exception {
+		final String sku = requireNonNull(dto.getSku(), "dto.sku");
+		dto.setProducts(getWarehouseItemProductDtos(sku));
+	}
+
+	protected List<WarehouseItemProductDto> getWarehouseItemProductDtos(@NonNull final String sku) throws Exception {
+		final List<WarehouseItemProductDto> products = new ArrayList<>();
+		skuCache.getSkus().stream().filter(s -> sku.equals(s.getSku())).forEach(skuObj -> {
+			products.add(new WarehouseItemProductDto(skuObj.getProductId(), skuObj.getProductName()));
+		});
+		return products;
+	}
+
+	protected List<String> _getProductNames(@NonNull WarehouseItem warehouseItem) {
+		try {
+			return getProductNames(warehouseItem);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected List<String> getProductNames(@NonNull WarehouseItem warehouseItem) throws Exception {
+		final String sku = requireNonNull(warehouseItem.getSku(), "warehouseItem.sku");
+		List<WarehouseItemProductDto> products = getWarehouseItemProductDtos(sku);
+		List<String> result = new ArrayList<String>();
+		for (WarehouseItemProductDto product : products) {
+			result.addAll(product.getProductName().values());
+		}
+		return result;
 	}
 }

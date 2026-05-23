@@ -3,7 +3,13 @@
         <form class="filter-form">
             <mat-form-field class="sku-filter-field">
                 <mat-label>SKU</mat-label>
-                <input matInput name="sku" [(ngModel)]="filterSku">
+                <input matInput name="sku" [ngModel]="filterSku$.getValue()" (ngModelChange)="filterSku$.next($event)">
+            </mat-form-field>
+        </form>
+        <form class="filter-form">
+            <mat-form-field class="product-name-filter-field">
+                <mat-label>Product-name</mat-label>
+                <input matInput name="productName" [ngModel]="filterProductName$.getValue()" (ngModelChange)="filterProductName$.next($event)">
             </mat-form-field>
         </form>
 
@@ -35,7 +41,7 @@
 
                 <ng-container matColumnDef="products">
                     <th mat-header-cell *matHeaderCellDef>Products</th>
-                    <td mat-cell *matCellDef="let warehouseItem"> {{getProductsLabel$(warehouseItem) | async}} </td>
+                    <td mat-cell *matCellDef="let warehouseItem"> {{getProductsLabel(warehouseItem)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantity">

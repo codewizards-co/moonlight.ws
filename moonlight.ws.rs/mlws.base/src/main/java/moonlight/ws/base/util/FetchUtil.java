@@ -17,7 +17,7 @@ public class FetchUtil {
 			return Collections.emptySet();
 		}
 		return Arrays.asList(fetch.trim().split("\\s*,\\s*")).stream().filter(elem -> !elem.isEmpty())
-				.collect(Collectors.toSet());
+				.collect(Collectors.toUnmodifiableSet());
 	}
 
 //	public static final Set<String> getFetchSet(Filter filter) {

@@ -2,8 +2,6 @@ package moonlight.ws.api.liferay;
 
 import static jakarta.ws.rs.core.MediaType.*;
 
-import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
-
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -22,12 +20,12 @@ public interface WarehouseItemRest {
 
 	@GET
 	@Path("{id}")
-	WarehouseItem getWarehouseItem(@NonNull @PathParam("id") Long id) throws Exception;
+	WarehouseItemDto getWarehouseItem(@NonNull @PathParam("id") Long id) throws Exception;
 
 	@GET
-	LiferayDtoPage<WarehouseItem> getWarehouseItemsPage(@NonNull @BeanParam WarehouseItemFilter filter)
+	LiferayDtoPage<WarehouseItemDto> getWarehouseItemsPage(@NonNull @BeanParam WarehouseItemFilter filter)
 			throws Exception;
 
 	@POST
-	WarehouseItem createWarehouseItem(@NonNull WarehouseItemDto warehouseItem) throws Exception;
+	WarehouseItemDto createWarehouseItem(@NonNull WarehouseItemDto warehouseItem) throws Exception;
 }

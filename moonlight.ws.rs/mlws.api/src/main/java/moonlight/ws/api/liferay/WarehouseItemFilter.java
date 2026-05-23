@@ -19,6 +19,9 @@ public class WarehouseItemFilter extends Filter {
 	@QueryParam("filter.sku")
 	private String filterSku;
 
+	@QueryParam("filter.productName")
+	private String filterProductName;
+
 	public Pagination getPagination() {
 		return Pagination.of(getPageNumberOrDefault(), getPageSizeOrDefault());
 	}

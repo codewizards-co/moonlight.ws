@@ -1,5 +1,6 @@
 package moonlight.ws.business.util;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -10,13 +11,28 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class FilterUtil {
 
-	public static <E> boolean equalsFilterValue(@NonNull E entity, @NonNull Function<E, Object> getter,
-			Object filterValue) {
+	public static <E> boolean equalsFilterValue(@NonNull E entity, @NonNull Function<E, Object> getter, Object filterValue) {
 		if (filterValue == null) {
 			return true;
 		}
 		Object value = getter.apply(entity);
 		return filterValue.equals(value);
+	}
+
+	public static <E> boolean equalsFilterValueI18n(@NonNull E entity, @NonNull Function<E, Collection<Object>> getter, Object filterValue) {
+		if (filterValue == null) {
+			return true;
+		}
+		Collection<Object> value = getter.apply(entity);
+		if (value == null || value.isEmpty()) {
+			return false;
+		}
+		for (Object v : value) {
+			if (filterValue.equals(v)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static <E> boolean containsFilterValue(@NonNull E entity, @NonNull Function<E, String> getter,
@@ -29,6 +45,22 @@ public final class FilterUtil {
 			return false;
 		}
 		return value.toLowerCase(Locale.UK).contains(filterValue.toLowerCase(Locale.UK));
+	}
+
+	public static <E> boolean matchesFilterValueI18n(E entity, Function<E, Collection<String>> getter, Pattern filterValue) {
+		if (filterValue == null) {
+			return true;
+		}
+		Collection<String> value = getter.apply(entity);
+		if (value == null || value.isEmpty()) {
+			return false;
+		}
+		for (String v : value) {
+			if (filterValue.matcher(v).matches()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static <E> boolean matchesFilterValue(E entity, Function<E, String> getter, Pattern filterValue) {

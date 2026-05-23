@@ -2,13 +2,30 @@ package moonlight.ws.api.liferay;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
 
+import lombok.Getter;
+import lombok.Setter;
+import moonlight.ws.api.RestConst;
+import moonlight.ws.api.warehouse.WarehouseItemProductDto;
+
+@Getter
+@Setter
 public class WarehouseItemDto extends WarehouseItem {
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The list of products related to the SKU of this warehouse-item.
+	 * Resolved only when {@link RestConst#QUERY_FETCH fetch} contains
+	 * {@code products}.
+	 */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<WarehouseItemProductDto> products;
 
 	@JsonProperty("externalReferenceCode")
 	@Override

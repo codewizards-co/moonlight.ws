@@ -22,10 +22,12 @@ import {RestConfig} from '../rest/rest.config';
 import {concatUrlSegments} from '../util/url.util';
 import {KeycloakProvider} from '../rest/keycloak.provider';
 import {createNumberPropertyDefined, createStringPropertyUndefined} from '../util/component.util';
+import {WarehouseItemMovement} from "../rest/model/warehouse-item-movement";
 
 const PAGE_INDEX = "mlws.WarehouseItemListComponent.pageIndex";
 const PAGE_SIZE = "mlws.WarehouseItemListComponent.pageSize";
 const FILTER_SKU = "mlws.WarehouseItemListComponent.filterSku";
+const FILTER_PRODUCT_NAME = "mlws.WarehouseItemListComponent.filterProductName";
 
 @Component({
 	selector: 'mlws-warehouse-item-list',
@@ -55,19 +57,14 @@ export class WarehouseItemListComponent implements OnInit {
 	protected readonly pageIndex$ : BehaviorSubject<number>;
 	protected readonly pageSize$: BehaviorSubject<number>;
 	protected readonly filterSku$: BehaviorSubject<string | undefined>;
+	protected readonly filterProductName$: BehaviorSubject<string | undefined>;
 	protected readonly printLabelUrl$: Observable<string>;
-
-	protected get filterSku(): string|undefined {
-		return this.filterSku$.getValue();
-	}
-	protected set filterSku(val: string|undefined) {
-		this.filterSku$.next(val);
-	}
 
 	public constructor() {
 		this.pageIndex$ = createNumberPropertyDefined(this, PAGE_INDEX, 0);
 		this.pageSize$ = createNumberPropertyDefined(this, PAGE_SIZE, 10);
 		this.filterSku$ = createStringPropertyUndefined(this, FILTER_SKU, undefined);
+		this.filterProductName$ = createStringPropertyUndefined(this, FILTER_PRODUCT_NAME, undefined);
 
 		this.printLabelUrl$ = combineLatest({
 			bearerTokenSha256: this.keycloakProvider.bearerTokenSha256$,
@@ -99,16 +96,19 @@ export class WarehouseItemListComponent implements OnInit {
 		combineLatest([
 			this.warehouseSelectorService.getSelectedWarehouse$(),
 			this.filterSku$,
+			this.filterProductName$,
 			this.pageIndex$,
 			this.pageSize$
 		]).pipe(
 			untilDestroyed(this),
 			tap(() => this.loading$.next(true)),
 			debounceTime(500),
-			concatMap(([warehouse, filterSku, pageIndex, pageSize]) =>
+			concatMap(([warehouse, filterSku, filterProductName, pageIndex, pageSize]) =>
 				this.warehouseItemRestService.getWarehouseItemPage({
 					filterWarehouseId: warehouse.id!,
 					filterSku: filterSku ? `/${filterSku.replace("*", ".*")}.*/i` : undefined,
+					filterProductName: filterProductName ? `/.*${filterProductName.replace("*", ".*")}.*/i` : undefined,
+					fetch: "products",
 					sort: 'sku:asc',
 					pageNumber: pageIndex + 1,
 					pageSize: pageSize
@@ -123,29 +123,15 @@ export class WarehouseItemListComponent implements OnInit {
 		});
 	}
 
-	protected getProductsLabel$(warehouseItem: WarehouseItem): Observable<string> {
-		if (!warehouseItem.sku) {
-			return of("");
+	protected getProductsLabel(warehouseItem: WarehouseItem): string {
+		if (!warehouseItem.products || warehouseItem.products.length === 0) {
+			return '';
 		}
-		let productsLabel$: BehaviorSubject<string> | undefined = (warehouseItem as any)._productsLabel;
-		if (!productsLabel$) {
-			productsLabel$ = new BehaviorSubject<string>("(loading)");
-			(warehouseItem as any)._productsLabel = productsLabel$;
-
-			this.skuRestService.getSkuPage({ filterSku: warehouseItem.sku }).pipe(untilDestroyed(this))
-				.subscribe(page => {
-					if (!page.items || page.items.length === 0) {
-						productsLabel$?.next("");
-						return;
-					}
-					let result: string = getL10n(page.items[0].productName) ?? "";
-					if (page.totalSize > 1) {
-						result += ` (+ ${page.totalSize - 1} more)`;
-					}
-					productsLabel$?.next(result);
-				});
+		let result: string = getL10n(warehouseItem.products[0].productName) ?? "";
+		if (warehouseItem.products.length > 1) {
+			result += ` (+ ${warehouseItem.products.length - 1} more)`;
 		}
-		return productsLabel$;
+		return result;
 	}
 
 	protected onClick(row: WarehouseItem): void {
