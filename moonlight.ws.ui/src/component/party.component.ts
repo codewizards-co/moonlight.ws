@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component, EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +37,7 @@ import { AddConsigneeOverlayComponent } from './add-consignee-overlay.component'
 import { getL10n } from '../util/i18n.util';
 import { Country } from '../rest/model/country';
 import { Region } from '../rest/model/region';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'mlws-party',
@@ -61,6 +71,9 @@ export class PartyComponent implements OnInit {
 
     @Input()
     public partyId: number | null | undefined;
+
+    @Output()
+    public idChanged$ = new EventEmitter<number>();
 
     public get country(): Country | undefined {
         const party = this.party$.getValue();
@@ -140,6 +153,13 @@ export class PartyComponent implements OnInit {
                 this.afterLoad(party);
             });
         } else if (isValidFiniteNumber(this.partyId) && this.partyId! < 0) {
+            this.loadingCountInc();
+            this.warehouseSelectorService.getWarehouses$() //
+                .pipe(take(1)) //
+                .subscribe(warehouses => {
+                    this.warehouses = warehouses;
+                    this.loadingCountDec();
+                });
             const party: Party = { code: uuid().substring(24, 36), active: true };
             this.afterLoad(party);
         } else {
@@ -231,7 +251,10 @@ export class PartyComponent implements OnInit {
         this._save_party(saveParam).pipe( //
             concatMap(() => this._save_supplier(saveParam)), //
             concatMap(() => this._save_consignees(saveParam)) //
-        ).subscribe(() => this.load());
+        ).subscribe(() => {
+            this.load();
+            this.idChanged$.emit(saveParam.party.id);
+        });
     }
 
     protected _save_party(param: SaveParam): Observable<Party> {

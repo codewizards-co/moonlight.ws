@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { getValidFiniteNumber } from '../util/number.util';
 import { ID_PARAM } from '../util/shared-const';
@@ -18,7 +18,8 @@ import { ServiceModule } from '../service/service.module';
 })
 @UntilDestroy()
 export class PartyPage {
-    private readonly activatedRoute = inject(ActivatedRoute);
+    protected readonly activatedRoute = inject(ActivatedRoute);
+    protected readonly router = inject(Router);
     protected readonly id$ = new BehaviorSubject<number | undefined>(undefined);
     protected readonly loading$ = new BehaviorSubject<boolean>(false);
 
@@ -30,5 +31,13 @@ export class PartyPage {
                 console.debug(`activatedRoute changed: id=${id}`);
                 this.id$.next(id);
             });
+    }
+
+    protected idChanged(id: number): void {
+        if (this.id$.getValue() !== id) {
+            this.router.navigate(['party'], {
+                queryParams: { id }
+            });
+        }
     }
 }
