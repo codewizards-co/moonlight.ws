@@ -1,5 +1,8 @@
 
 mlws-warehouse-selector {
+  display: flex;
+  flex-display: row;
+  flex-wrap: nowrap;
   .warehouse-field {
     width: 100%;
   }

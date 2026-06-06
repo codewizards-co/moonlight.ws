@@ -21,19 +21,8 @@ export class WarehouseSelectorService {
     private readonly warehouses$ = new BehaviorSubject<Warehouse[] | undefined>(undefined);
 
     public constructor() {
-        this.migrate(); // TODO remove this clean-up again after 2026-04-01
-        this.loading$.next(true);
-        this.loadWarehouses(1);
+        this.loadWarehouses();
     }
-
-	private migrate(): void { // TODO remove this clean-up again after 2026-04-01
-		const oldKey = "MLL_WAREHOUSE_ERC";
-		const value = localStorage.getItem(oldKey);
-		if (value) {
-			localStorage.setItem(MLWS_WAREHOUSE_ERC, value);
-			localStorage.removeItem(oldKey);
-		}
-	}
 
     public getWarehouses$(): Observable<Warehouse[]> {
         return this.warehouses$.pipe(
@@ -77,27 +66,28 @@ export class WarehouseSelectorService {
         ));
     }
 
-    private loadWarehouses(pageNumber: number): void {
+    private loadWarehouses(suppressLoadingIndicator = false, pageNumber = 1, allWarehouses: Warehouse[] = []): void {
+        if (pageNumber === 1 && !suppressLoadingIndicator) {
+            this.loading$.next(true);
+        }
         this.warehouseRestService.getWarehousePage({
             filterActive: true,
             sort: "name:asc,countryISOCode:asc,city:asc",
             pageNumber,
             pageSize: 500
         }).subscribe(page => {
-            const oldValue = this.warehouses$.getValue();
-            if (oldValue) {
-                this.warehouses$.next([...oldValue, ...page.items]);
-            } else {
-                this.warehouses$.next(page.items);
-            }
+            allWarehouses.push(...page.items);
             if (page.pageNumber < page.lastPageNumber!) {
-                this.loadWarehouses(page.pageNumber + 1);
+                this.loadWarehouses(suppressLoadingIndicator, page.pageNumber + 1, allWarehouses);
             } else {
-                this.loading$.next(false);
+                this.warehouses$.next(allWarehouses);
+                if (!suppressLoadingIndicator) {
+                    this.loading$.next(false);
+                }
                 const lastSelectedWarehouseExternalReferenceCode = localStorage.getItem(MLWS_WAREHOUSE_ERC);
                 if (lastSelectedWarehouseExternalReferenceCode) {
                     const warehouse = this.warehouses$.getValue()?.find((wh) => lastSelectedWarehouseExternalReferenceCode === wh.externalReferenceCode);
-                    if (warehouse) {
+                    if (warehouse && warehouse.id !== this.getSelectedWarehouse()?.id) {
                         this.selectWarehouse(warehouse);
                     }
                 }
@@ -113,5 +103,9 @@ export class WarehouseSelectorService {
             return "";
         }
         return getL10n(warehouse.name) + " (" + warehouse.countryISOCode + ", " + warehouse.city + ")";
+    }
+
+    public reload(suppressLoadingIndicator = true): void {
+        this.loadWarehouses(suppressLoadingIndicator);
     }
 }

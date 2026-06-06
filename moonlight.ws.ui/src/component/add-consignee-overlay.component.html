@@ -1,13 +1,18 @@
 <h1>Add consignee / assign warehouse</h1>
 
-<mat-form-field class="warehouse-field">
-  <mat-label>Warehouse</mat-label>
-  <mat-select [value]="warehouse$.getValue()" (valueChange)="warehouse$.next($event)" >
-    @for (warehouse of warehouses$ | async; track warehouse.id) {
-      <mat-option [value]="warehouse">{{warehouseSelectorService.getWarehouseLabel(warehouse)}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
+<div class="warehouse-row">
+    <mat-form-field class="warehouse-field">
+        <mat-label>Warehouse</mat-label>
+        <mat-select [value]="warehouse$.getValue()" (valueChange)="warehouse$.next($event)" >
+            @for (warehouse of warehouses$ | async; track warehouse.id) {
+                <mat-option [value]="warehouse">{{warehouseSelectorService.getWarehouseLabel(warehouse)}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <button matMiniFab matTooltip="Reload warehouses" aria-label="Reload warehouses" (click)="warehouseSelectorService.reload()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>
 
 <button matButton="elevated" type="button" (click)="onOkClick()">
   <mat-icon>done</mat-icon>

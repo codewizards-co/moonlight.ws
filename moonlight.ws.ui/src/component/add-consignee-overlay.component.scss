@@ -1,4 +1,9 @@
 mlws-add-consignee-overlay {
+  .warehouse-row {
+    display: flex;
+    flex-direction: row;
+  }
+
   .warehouse-field {
     width: 100%;
   }

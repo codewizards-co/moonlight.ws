@@ -1,43 +1,43 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component, EventEmitter,
+    Component,
+    EventEmitter,
     inject,
     Input,
     OnInit,
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ServiceModule } from '../service/service.module';
-import { RestModule } from '../rest/rest.module';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { BehaviorSubject, concatMap, filter, forkJoin, Observable, of, take, tap } from 'rxjs';
-import { v4 as uuid } from 'uuid';
-import { Party } from '../rest/model/party';
-import { isValidFiniteNumber } from '../util/number.util';
-import { PartyRestService } from '../rest/party-rest.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { isStringEqual, trimString } from '../util/string.util';
-import { SupplierRestService } from '../rest/supplier-rest.service';
-import { ConsigneeRestService } from '../rest/consignee-rest.service';
-import { Consignee } from '../rest/model/consignee';
-import { Warehouse } from '../rest/model/warehouse';
-import { CountryService } from '../service/country.service';
-import { WarehouseSelectorService } from '../service/warehouse-selector.service';
-import { AddConsigneeOverlayComponent } from './add-consignee-overlay.component';
-import { getL10n } from '../util/i18n.util';
-import { Country } from '../rest/model/country';
-import { Region } from '../rest/model/region';
-import {Router} from "@angular/router";
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ServiceModule} from '../service/service.module';
+import {RestModule} from '../rest/rest.module';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {BehaviorSubject, concatMap, filter, forkJoin, Observable, of, take, tap} from 'rxjs';
+import {v4 as uuid} from 'uuid';
+import {Party} from '../rest/model/party';
+import {isValidFiniteNumber} from '../util/number.util';
+import {PartyRestService} from '../rest/party-rest.service';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {isStringEqual, trimString} from '../util/string.util';
+import {SupplierRestService} from '../rest/supplier-rest.service';
+import {ConsigneeRestService} from '../rest/consignee-rest.service';
+import {Consignee} from '../rest/model/consignee';
+import {Warehouse} from '../rest/model/warehouse';
+import {CountryService} from '../service/country.service';
+import {WarehouseSelectorService} from '../service/warehouse-selector.service';
+import {AddConsigneeOverlayComponent} from './add-consignee-overlay.component';
+import {getL10n} from '../util/i18n.util';
+import {Country} from '../rest/model/country';
+import {Region} from '../rest/model/region';
 
 @Component({
     selector: 'mlws-party',
@@ -132,6 +132,10 @@ export class PartyComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.warehouseSelectorService.getWarehouses$() //
+            .pipe(untilDestroyed(this)) //
+            .subscribe(warehouses => this.warehouses = warehouses);
+
         this.load();
     }
 
@@ -153,13 +157,6 @@ export class PartyComponent implements OnInit {
                 this.afterLoad(party);
             });
         } else if (isValidFiniteNumber(this.partyId) && this.partyId! < 0) {
-            this.loadingCountInc();
-            this.warehouseSelectorService.getWarehouses$() //
-                .pipe(take(1)) //
-                .subscribe(warehouses => {
-                    this.warehouses = warehouses;
-                    this.loadingCountDec();
-                });
             const party: Party = { code: uuid().substring(24, 36), active: true };
             this.afterLoad(party);
         } else {
@@ -248,11 +245,13 @@ export class PartyComponent implements OnInit {
         party.consignees = undefined;
 
         const saveParam = new SaveParam(party, this.supplier, this.consigneeRows$.getValue());
+        this.loadingCountInc();
         this._save_party(saveParam).pipe( //
             concatMap(() => this._save_supplier(saveParam)), //
             concatMap(() => this._save_consignees(saveParam)) //
         ).subscribe(() => {
             this.load();
+            this.loadingCountDec();
             this.idChanged$.emit(saveParam.party.id);
         });
     }

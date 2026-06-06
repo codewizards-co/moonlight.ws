@@ -1,27 +1,35 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, concatMap, forkJoin, map } from 'rxjs';
-import { Warehouse } from '../rest/model/warehouse';
-import { WarehouseSelectorService } from '../service/warehouse-selector.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ServiceModule } from '../service/service.module';
-import { RestModule } from '../rest/rest.module';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Consignee } from '../rest/model/consignee';
-import { ConsigneeRestService } from '../rest/consignee-rest.service';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    inject,
+    Input,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {BehaviorSubject, concatMap, forkJoin, map} from 'rxjs';
+import {Warehouse} from '../rest/model/warehouse';
+import {WarehouseSelectorService} from '../service/warehouse-selector.service';
+import {ServiceModule} from '../service/service.module';
+import {RestModule} from '../rest/rest.module';
+import {Consignee} from '../rest/model/consignee';
+import {ConsigneeRestService} from '../rest/consignee-rest.service';
 
 @Component({
     selector: 'mlws-add-consignee-overlay',
     imports: [
-        CommonModule, FormsModule, MatFormFieldModule, MatInputModule,
-        ReactiveFormsModule, ServiceModule, RestModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule,
-        MatSelectModule
+        CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, ServiceModule,
+        RestModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatSelectModule, MatTooltipModule
     ],
     templateUrl: './add-consignee-overlay.component.html',
     styleUrls: ['./add-consignee-overlay.component.scss'],
