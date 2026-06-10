@@ -2,6 +2,7 @@ package moonlight.ws.business.rest.impl.liferay;
 
 import static java.util.Objects.*;
 import static moonlight.ws.api.RestConst.*;
+import static moonlight.ws.api.liferay.WarehouseItemFilter.*;
 import static moonlight.ws.base.util.FetchUtil.*;
 import static moonlight.ws.base.util.JsonUtil.*;
 import static moonlight.ws.base.util.SortUtil.*;
@@ -75,7 +76,8 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 		String sku = filter.getFilterSku();
 		String productName = filter.getFilterProductName();
 		Map<String, Boolean> propName2Descending = getSortPropName2DescendingMap(filter);
-		if (!isEmpty(sku) || !isEmpty(productName) || !propName2Descending.isEmpty()) {
+		boolean includeInternal = Boolean.TRUE.equals(filter.getFilterIncludeInternal());
+		if (!isEmpty(sku) || !isEmpty(productName) || !propName2Descending.isEmpty() || !includeInternal) {
 			Pattern skuPattern = getPatternIfRegex(sku);
 			Pattern productNamePattern = getPatternIfRegex(productName);
 			Stream<WarehouseItem> warehouseItemsFilteredStream = warehouseItemCache.getWarehouseItems(warehouseId)
@@ -89,6 +91,10 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
 							.filter(whi -> matchesFilterValue(whi, WarehouseItem::getSku, skuPattern));
 				}
+			}
+			if (!includeInternal) {
+				warehouseItemsFilteredStream = warehouseItemsFilteredStream //
+						.filter(whi -> !isInternalSku(whi.getSku()));
 			}
 			if (!isEmpty(productName)) {
 				if (productNamePattern == null) {
@@ -108,6 +114,18 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 			return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(warehouseItemsFiltered, filter)));
 		}
 		return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(resource.getWarehouseIdWarehouseItemsPage(warehouseId, filter.getPagination()))));
+	}
+
+	private boolean isInternalSku(String sku) {
+		if (sku == null) {
+			return false;
+		}
+		for (Pattern pattern : INTERNAL_SKU_PATTERNS) {
+			if (pattern.matcher(sku).matches()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static class WarehouseItemComparator implements Comparator<WarehouseItem> {

@@ -26,4 +26,7 @@ export interface WarehouseItemFilter extends AbstractFilter {
     filterWarehouseId: number;
     filterSku?: string;
     filterProductName?: string;
+
+    //filter.includeInternal
+    filterIncludeInternal?: boolean;
 }

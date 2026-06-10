@@ -32,6 +32,9 @@ export class WarehouseItemRestService extends AbstractRestService<WarehouseItem,
         if (filter.filterProductName) {
             query.push(`filter.productName=${encodeURIComponent(filter.filterProductName)}`);
         }
+        if (filter.filterIncludeInternal) {
+            query.push('filter.includeInternal=true');
+        }
 
         if (filter.pageNumber !== undefined) {
             query.push(`pageNumber=${filter.pageNumber}`);
