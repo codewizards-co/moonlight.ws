@@ -18,7 +18,8 @@ public class WarehouseItemFilter extends Filter {
 
 	public static final List<Pattern> INTERNAL_SKU_PATTERNS = List.of( //
 			Pattern.compile("CS\\d+"), //
-			Pattern.compile("SP\\d+") //
+			Pattern.compile("SP\\d+"), //
+			Pattern.compile("default")
 	);
 
 	@QueryParam("filter.warehouseId")
