@@ -4,7 +4,8 @@ import {AbstractRestService} from './abstract-rest.service';
 import {
     WarehouseItemMovement,
     WarehouseItemMovementFilter,
-    WarehouseItemMovementPage
+    WarehouseItemMovementPage,
+    WarehouseItemMovementType
 } from './model/warehouse-item-movement';
 
 @Injectable()
@@ -41,6 +42,15 @@ export class WarehouseItemMovementRestService extends AbstractRestService<Wareho
             }
             if (filter.filterProductName) {
                 query.push(`filter.productName=${encodeURIComponent(filter.filterProductName)}`);
+            }
+            if (filter.filterType) {
+                query.push(`filter.type=${filter.filterType}`);
+            }
+            if (filter.filterType == WarehouseItemMovementType.SUPPLY && filter.filterSupplierId) {
+                query.push(`filter.supplierId=${filter.filterSupplierId}`);
+            }
+            if (filter.filterType == WarehouseItemMovementType.TRANSFER && filter.filterOtherWarehouseId) {
+                query.push(`filter.otherWarehouseId=${filter.filterOtherWarehouseId}`);
             }
 
             if (filter.filterCreatedFromIncl !== undefined) {

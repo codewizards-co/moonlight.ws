@@ -25,9 +25,6 @@ public class WarehouseItemMovementDao extends AbstractDao<WarehouseItemMovementE
 			if (filter.getFilterWarehouseItemIds() != null && !filter.getFilterWarehouseItemIds().isEmpty()) {
 				jpqlCriteria += " and e.warehouseItemId in :warehouseItemIds";
 				params.put("warehouseItemIds", filter.getFilterWarehouseItemIds());
-//			} else if (filter.getFilterWarehouseItemId() != null) {
-//				jpqlCriteria += " and e.warehouseItemId = :warehouseItemId";
-//				params.put("warehouseItemId", filter.getFilterWarehouseItemId());
 			}
 
 			if (filter.getFilterWarehouseItemErc() != null) {
@@ -49,6 +46,14 @@ public class WarehouseItemMovementDao extends AbstractDao<WarehouseItemMovementE
 			if (filter.getFilterType() != null) {
 				jpqlCriteria += " and e.type = :type";
 				params.put("type", filter.getFilterType());
+			}
+			if (filter.getFilterSupplierId() != null) {
+				jpqlCriteria += " and e.supplierId = :supplierId";
+				params.put("supplierId", filter.getFilterSupplierId());
+			}
+			if (filter.getFilterOtherWarehouseId() != null) {
+				jpqlCriteria += " and e.otherWarehouseId = :otherWarehouseId";
+				params.put("otherWarehouseId", filter.getFilterOtherWarehouseId());
 			}
 
 			if (filter.getFilterCreatedFromIncl() != null) {

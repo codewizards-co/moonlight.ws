@@ -14,6 +14,24 @@
             <mat-label>Product-name</mat-label>
             <input matInput name="productName" [ngModel]="filterProductName$.getValue()" (ngModelChange)="filterProductName$.next($event)">
         </mat-form-field>
+        <mat-form-field class="type-filter-field">
+            <mat-label>Type</mat-label>
+            <mat-select name="filterType" [ngModel]="filterType$.getValue()" (ngModelChange)="filterType$.next($event)" >
+            @for (mt of movementTypes; track mt) {
+                <mat-option [value]="mt">{{mt}}</mat-option>
+            }
+            </mat-select>
+        </mat-form-field>
+        @if (isSupplierSelectionVisible()) {
+          <mat-form-field class="supplier-filter-field">
+              <mat-label>Supplier</mat-label>
+              <mat-select name="filterSupplier" [ngModel]="filterSupplier$.getValue()" (ngModelChange)="filterSupplier$.next($event)" ) >
+                  @for (supplier of suppliers$ | async; track supplier?.id??-1) {
+                      <mat-option [value]="supplier">{{supplier?.party?.name}}</mat-option>
+                  }
+              </mat-select>
+          </mat-form-field>
+        }
 
         <mat-form-field class="from-date-filter-field">
           <mat-label>From (incl.)</mat-label>

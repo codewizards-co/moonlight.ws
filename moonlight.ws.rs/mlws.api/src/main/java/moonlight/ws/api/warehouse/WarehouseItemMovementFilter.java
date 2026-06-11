@@ -35,6 +35,12 @@ public class WarehouseItemMovementFilter extends Filter {
 	@QueryParam("filter.type")
 	private WarehouseItemMovementType filterType;
 
+	@QueryParam("filter.supplierId")
+	private Long filterSupplierId;
+
+	@QueryParam("filter.otherWarehouseId")
+	private Long filterOtherWarehouseId;
+
 	@QueryParam("filter.createdFromIncl")
 	private Instant filterCreatedFromIncl;
 

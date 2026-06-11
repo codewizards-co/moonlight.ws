@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BehaviorSubject, combineLatest, concatMap, from, interval, map, Observable, of, tap } from 'rxjs';
+import {BehaviorSubject, combineLatest, concatMap, from, interval, map, Observable, of, take, tap} from 'rxjs';
 import swal from 'sweetalert';
 import { WarehouseItem, WarehouseItemPage } from '../rest/model/warehouse-item';
 import { WarehouseItemRestService } from '../rest/warehouse-item-rest.service';
@@ -225,8 +225,8 @@ export class WarehouseItemComponent implements OnChanges, OnInit {
     }
 
     protected _loadSuppliers(suppliersCollected: Supplier[], pageNumber: number): Observable<Supplier[]> {
-        return this.supplierRestService.getSupplierPage({pageNumber, pageSize: 2, fetch: 'party'}).pipe( // TODO pageSize is too small, now -- this is just for testing!
-            untilDestroyed(this),
+        return this.supplierRestService.getSupplierPage({pageNumber, pageSize: 500, fetch: 'party'}).pipe(
+            untilDestroyed(this), take(1),
             concatMap(supplierPage => {
                 const nextPageNumber = pageNumber + 1;
                 if (nextPageNumber > (supplierPage.lastPageNumber??0)) {
@@ -245,7 +245,7 @@ export class WarehouseItemComponent implements OnChanges, OnInit {
             : WarehouseItemMovementType.INVENTORY;
         const movementType$ = new BehaviorSubject<WarehouseItemMovementType>(movementType);
         movementType$.pipe(untilDestroyed(this))
-            .subscribe(pageSize => localStorage.setItem(MOVEMENT_TYPE, "" + pageSize));
+            .subscribe(mt=> localStorage.setItem(MOVEMENT_TYPE, "" + mt));
         return movementType$;
     }
 
