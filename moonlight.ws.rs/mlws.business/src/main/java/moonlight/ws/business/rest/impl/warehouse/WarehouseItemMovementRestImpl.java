@@ -7,10 +7,13 @@ import static moonlight.ws.base.util.StringUtil.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
@@ -26,6 +29,7 @@ import jakarta.ws.rs.QueryParam;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.PriceDto;
+import moonlight.ws.api.liferay.WarehouseItemFilter;
 import moonlight.ws.api.party.SupplierDto;
 import moonlight.ws.api.warehouse.WarehouseItemMovementDto;
 import moonlight.ws.api.warehouse.WarehouseItemMovementDtoPage;
@@ -94,9 +98,36 @@ public class WarehouseItemMovementRestImpl implements WarehouseItemMovementRest 
 	@Override
 	public WarehouseItemMovementDtoPage getWarehouseItemMovements(WarehouseItemMovementFilter filter) throws Exception {
 		filter = filter == null ? new WarehouseItemMovementFilter() : filter;
-		var searchResult = dao.searchEntities(filter);
 		var page = new WarehouseItemMovementDtoPage();
 		page.copyFromFilter(filter);
+
+		// filterProductName is not supported by DAO, hence we must translate it to warehouseItemIds first
+		if (!isEmpty(filter.getFilterProductName())) {
+			Long warehouseId = filter.getFilterWarehouseId();
+			if (warehouseId == null) {
+				throw new BadRequestException("filter.warehouseId is required when filtering for product-names!");
+			}
+			WarehouseItemFilter whiFilter = new WarehouseItemFilter();
+			whiFilter.setFilterWarehouseId(warehouseId);
+			whiFilter.setFilterProductName(filter.getFilterProductName());
+			Set<Long> warehouseItemIds = warehouseItemCache.getWarehouseItems(whiFilter).
+				stream().map(WarehouseItem::getId).collect(Collectors.toSet());
+
+			if (warehouseItemIds.isEmpty()) {
+				page.setItems(Collections.emptyList());
+				page.setTotalSize(0);
+				return page;
+			}
+
+			Set<Long> origWhIds = filter.getFilterWarehouseItemIds();
+			if (origWhIds != null && !origWhIds.isEmpty()) {
+				warehouseItemIds = new HashSet<>(warehouseItemIds);
+				warehouseItemIds.retainAll(origWhIds);
+			}
+			filter.setFilterWarehouseItemIds(warehouseItemIds);
+		}
+		var searchResult = dao.searchEntities(filter);
+
 		page.setItems(mapper.toDtos(searchResult.getEntities()));
 		page.setTotalSize(searchResult.getTotalSize());
 		return fetchRelations(page);

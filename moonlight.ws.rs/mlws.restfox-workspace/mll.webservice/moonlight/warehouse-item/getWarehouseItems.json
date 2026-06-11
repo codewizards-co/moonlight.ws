@@ -4,7 +4,7 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{mlws_url}}/warehouse-item?filter.warehouseId=34549&fetch=products&filter.productName=/.*fein.*/i",
+    "url": "{{mlws_url}}/warehouse-item?filter.warehouseId=34549&fetch=products&filter.includeInternal=true",
     "sortOrder": 0,
     "parameters": [
         {
@@ -34,7 +34,12 @@
         },
         {
             "name": "filter.productName",
-            "value": "/.*fein.*/i"
+            "value": "/.*fein.*/i",
+            "disabled": true
+        },
+        {
+            "name": "filter.includeInternal",
+            "value": "true"
         }
     ],
     "pathParameters": []

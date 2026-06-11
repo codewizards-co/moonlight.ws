@@ -265,7 +265,7 @@ export class WarehouseItemComponent implements OnChanges, OnInit {
 
             if (!silent) this.loadingCountInc();
             this.warehouseItemMovementRestService.getWarehouseItemMovementPage({
-                filterWarehouseItemId: this.warehouseItemId!,
+                filterWarehouseItemIds: [this.warehouseItemId!],
                 filterBooked: false,
                 pageSize: 500
             }).subscribe(page => {

@@ -75,9 +75,10 @@ export interface WarehouseItemMovement {
 export interface WarehouseItemMovementPage extends AbstractPage<WarehouseItemMovement> {}
 
 export interface WarehouseItemMovementFilter extends AbstractFilter {
-    filterWarehouseItemId?: number;
+    filterWarehouseItemIds?: number[];
     filterWarehouseItemErc?: string;
     filterSku?: string;
+    filterProductName?: string;
     filterWarehouseId?: number;
     filterWarehouseErc?: string;
 

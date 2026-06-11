@@ -2,21 +2,14 @@ package moonlight.ws.business.rest.impl.liferay;
 
 import static java.util.Objects.*;
 import static moonlight.ws.api.RestConst.*;
-import static moonlight.ws.api.liferay.WarehouseItemFilter.*;
 import static moonlight.ws.base.util.FetchUtil.*;
 import static moonlight.ws.base.util.JsonUtil.*;
 import static moonlight.ws.base.util.SortUtil.*;
 import static moonlight.ws.base.util.StringUtil.*;
-import static moonlight.ws.business.util.FilterUtil.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
@@ -38,7 +31,6 @@ import moonlight.ws.api.liferay.LiferayDtoPage;
 import moonlight.ws.api.liferay.WarehouseItemDto;
 import moonlight.ws.api.liferay.WarehouseItemFilter;
 import moonlight.ws.api.liferay.WarehouseItemRest;
-import moonlight.ws.api.warehouse.WarehouseItemProductDto;
 import moonlight.ws.liferay.LiferayResourceFactory;
 
 @RequestScoped
@@ -78,104 +70,10 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 		Map<String, Boolean> propName2Descending = getSortPropName2DescendingMap(filter);
 		boolean includeInternal = Boolean.TRUE.equals(filter.getFilterIncludeInternal());
 		if (!isEmpty(sku) || !isEmpty(productName) || !propName2Descending.isEmpty() || !includeInternal) {
-			Pattern skuPattern = getPatternIfRegex(sku);
-			Pattern productNamePattern = getPatternIfRegex(productName);
-			Stream<WarehouseItem> warehouseItemsFilteredStream = warehouseItemCache.getWarehouseItems(warehouseId)
-					.stream();
-			if (!isEmpty(sku)) {
-				if (skuPattern == null) {
-					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-							.filter(whi -> equalsFilterValue(whi, WarehouseItem::getSku, sku));
-
-				} else {
-					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-							.filter(whi -> matchesFilterValue(whi, WarehouseItem::getSku, skuPattern));
-				}
-			}
-			if (!includeInternal) {
-				warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-						.filter(whi -> !isInternalSku(whi.getSku()));
-			}
-			if (!isEmpty(productName)) {
-				if (productNamePattern == null) {
-					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-							.filter(whi -> equalsFilterValue(whi, whi2 -> _getProductNames(whi2), productName));
-				} else {
-					warehouseItemsFilteredStream = warehouseItemsFilteredStream //
-							.filter(whi -> matchesFilterValueI18n(whi, whi2 -> _getProductNames(whi2), productNamePattern));
-				}
-			}
-			if (!propName2Descending.isEmpty()) {
-				warehouseItemsFilteredStream = warehouseItemsFilteredStream
-						.sorted(new WarehouseItemComparator(propName2Descending));
-			}
-			List<WarehouseItem> warehouseItemsFiltered = warehouseItemsFilteredStream //
-					.collect(Collectors.toList());
-			return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(warehouseItemsFiltered, filter)));
+			List<WarehouseItem> warehouseItems = warehouseItemCache.getWarehouseItems(filter);
+			return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(warehouseItems, filter)));
 		}
 		return fetchRelations(toWarehouseItemDtoPage(LiferayDtoPage.of(resource.getWarehouseIdWarehouseItemsPage(warehouseId, filter.getPagination()))));
-	}
-
-	private boolean isInternalSku(String sku) {
-		if (sku == null) {
-			return false;
-		}
-		for (Pattern pattern : INTERNAL_SKU_PATTERNS) {
-			if (pattern.matcher(sku).matches()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static class WarehouseItemComparator implements Comparator<WarehouseItem> {
-
-		@NonNull
-		private Map<String, Boolean> propName2Descending;
-
-		public WarehouseItemComparator(@NonNull Map<String, Boolean> propName2Descending) {
-			this.propName2Descending = propName2Descending;
-		}
-
-		@Override
-		public int compare(WarehouseItem o1, WarehouseItem o2) {
-			if (o1.getId() != null && o1.getId().equals(o2.getId())) {
-				return 0;
-			}
-			for (Map.Entry<String, Boolean> me : propName2Descending.entrySet()) {
-				var propName = me.getKey();
-				int res = 0;
-				boolean descending = me.getValue();
-				if ("id".equalsIgnoreCase(propName)) {
-					comparePropValue(o1.getId(), o2.getId());
-				} else if ("externalReferenceCode".equalsIgnoreCase(propName)) {
-					res = comparePropValue(o1.getExternalReferenceCode(), o2.getExternalReferenceCode());
-				} else if ("sku".equalsIgnoreCase(propName)) {
-					res = comparePropValue(o1.getSku(), o2.getSku());
-				}
-				if (descending) {
-					res = -1 * res;
-				}
-				if (res != 0) {
-					return res;
-				}
-			}
-			return comparePropValue(o1.getId(), o2.getId());
-		}
-	}
-
-	protected static int comparePropValue(String v1, String v2) {
-		return nullToEmpty(v1).compareTo(nullToEmpty(v2));
-	}
-
-	protected static int comparePropValue(Long v1, Long v2) {
-		if (v1 == null) {
-			return v2 == null ? 0 : -1;
-		}
-		if (v2 == null) {
-			return 1;
-		}
-		return v1.compareTo(v2);
 	}
 
 	@Override
@@ -248,32 +146,6 @@ public class WarehouseItemRestImpl implements WarehouseItemRest {
 
 	protected void fetchProducts(@NonNull WarehouseItemDto dto) throws Exception {
 		final String sku = requireNonNull(dto.getSku(), "dto.sku");
-		dto.setProducts(getWarehouseItemProductDtos(sku));
-	}
-
-	protected List<WarehouseItemProductDto> getWarehouseItemProductDtos(@NonNull final String sku) throws Exception {
-		final List<WarehouseItemProductDto> products = new ArrayList<>();
-		skuCache.getSkus().stream().filter(s -> sku.equals(s.getSku())).forEach(skuObj -> {
-			products.add(new WarehouseItemProductDto(skuObj.getProductId(), skuObj.getProductName()));
-		});
-		return products;
-	}
-
-	protected List<String> _getProductNames(@NonNull WarehouseItem warehouseItem) {
-		try {
-			return getProductNames(warehouseItem);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected List<String> getProductNames(@NonNull WarehouseItem warehouseItem) throws Exception {
-		final String sku = requireNonNull(warehouseItem.getSku(), "warehouseItem.sku");
-		List<WarehouseItemProductDto> products = getWarehouseItemProductDtos(sku);
-		List<String> result = new ArrayList<String>();
-		for (WarehouseItemProductDto product : products) {
-			result.addAll(product.getProductName().values());
-		}
-		return result;
+		dto.setProducts(skuCache.getWarehouseItemProductDtos(sku));
 	}
 }

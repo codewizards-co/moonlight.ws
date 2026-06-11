@@ -12,8 +12,10 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResou
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.Filter;
+import moonlight.ws.api.warehouse.WarehouseItemProductDto;
 import moonlight.ws.liferay.LiferayConfig;
 import moonlight.ws.liferay.LiferayResourceFactory;
 
@@ -71,5 +73,13 @@ public class SkuCache {
 		}
 		skus.trimToSize();
 		return skus;
+	}
+
+	public List<WarehouseItemProductDto> getWarehouseItemProductDtos(@NonNull final String sku) throws Exception {
+		final List<WarehouseItemProductDto> products = new ArrayList<>();
+		getSkus().stream().filter(s -> sku.equals(s.getSku())).forEach(skuObj -> {
+			products.add(new WarehouseItemProductDto(skuObj.getProductId(), skuObj.getProductName()));
+		});
+		return products;
 	}
 }

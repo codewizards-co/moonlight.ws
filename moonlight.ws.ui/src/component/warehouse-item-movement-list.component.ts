@@ -28,6 +28,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 const PAGE_INDEX = "mlws.WarehouseItemMovementListComponent.pageIndex";
 const PAGE_SIZE = "mlws.WarehouseItemMovementListComponent.pageSize";
 const FILTER_SKU = "mlws.WarehouseItemMovementListComponent.filterSku";
+const FILTER_PRODUCT_NAME = "mlws.WarehouseItemMovementListComponent.filterProductName";
 const FILTER_CREATED_FROM = "mlws.WarehouseItemMovementListComponent.filterCreatedFrom";
 const FILTER_CREATED_TO = "mlws.WarehouseItemMovementListComponent.filterCreatedTo";
 const FILTER_VISIBLE = "mlws.WarehouseItemMovementListComponent.filterVisible";
@@ -70,6 +71,7 @@ export class WarehouseItemMovementListComponent {
 
     protected readonly filterVisible$: BehaviorSubject<boolean>;
     protected readonly filterSku$: BehaviorSubject<string | undefined>;
+    protected readonly filterProductName$: BehaviorSubject<string | undefined>;
     protected readonly filterCreatedFrom$: BehaviorSubject<DateTime | undefined>;
     protected readonly filterCreatedTo$: BehaviorSubject<DateTime | undefined>;
 
@@ -94,6 +96,7 @@ export class WarehouseItemMovementListComponent {
         this.pageSize$ = createNumberPropertyDefined(this, PAGE_SIZE, 10);
         this.filterVisible$ = createBooleanPropertyDefined(this, FILTER_VISIBLE, true);
         this.filterSku$ = createStringPropertyUndefined(this, FILTER_SKU, undefined);
+        this.filterProductName$ = createStringPropertyUndefined(this, FILTER_PRODUCT_NAME, undefined);
         this.filterCreatedFrom$ = createDateTimePropertyUndefined(this, FILTER_CREATED_FROM, undefined);
         this.filterCreatedTo$ = createDateTimePropertyUndefined(this, FILTER_CREATED_TO, undefined);
         this.columnSkuVisible$ = createBooleanPropertyDefined(this, COLUMN_SKU_VISIBLE, true);
@@ -160,6 +163,7 @@ export class WarehouseItemMovementListComponent {
         combineLatest([
             this.warehouseSelectorService.getSelectedWarehouse$(),
             this.filterSku$,
+            this.filterProductName$,
             this.filterCreatedFrom$,
             this.filterCreatedTo$,
             this.pageIndex$,
@@ -168,11 +172,12 @@ export class WarehouseItemMovementListComponent {
             untilDestroyed(this),
             tap(() => this.loading$.next(true)),
             debounceTime(500),
-            concatMap(([warehouse, filterSku, filterCreatedFrom, filterCreatedTo, pageIndex, pageSize]) =>
+            concatMap(([warehouse, filterSku, filterProductName, filterCreatedFrom, filterCreatedTo, pageIndex, pageSize]) =>
                 this.warehouseItemMovementRestService.getWarehouseItemMovementPage({
-                    filterWarehouseItemId: this.warehouseItemId,
+                    filterWarehouseItemIds: this.warehouseItemId != undefined ? [this.warehouseItemId] : undefined,
                     filterWarehouseId: warehouse.id!,
                     filterSku: filterSku ? `/${filterSku.replace("*", ".*")}.*/i` : undefined,
+                    filterProductName: filterProductName ? `/.*${filterProductName.replace("*", ".*")}.*/i` : undefined,
                     filterCreatedFromIncl: filterCreatedFrom?.toISO() ?? undefined,
                     filterCreatedToExcl: filterCreatedTo?.toISO() ?? undefined,
                     pageNumber: pageIndex + 1,
@@ -226,6 +231,7 @@ export class WarehouseItemMovementListComponent {
     }
 
     protected onClick(row: WarehouseItemMovement): void {
+        // nothing to do yet
     }
 
     protected readonly DateTime = DateTime;

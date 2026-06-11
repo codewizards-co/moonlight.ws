@@ -10,6 +10,10 @@
           <mat-label>SKU</mat-label>
           <input matInput name="sku" [ngModel]="filterSku$.getValue()" (ngModelChange)="filterSku$.next($event)">
         </mat-form-field>
+        <mat-form-field class="product-name-filter-field">
+            <mat-label>Product-name</mat-label>
+            <input matInput name="productName" [ngModel]="filterProductName$.getValue()" (ngModelChange)="filterProductName$.next($event)">
+        </mat-form-field>
 
         <mat-form-field class="from-date-filter-field">
           <mat-label>From (incl.)</mat-label>

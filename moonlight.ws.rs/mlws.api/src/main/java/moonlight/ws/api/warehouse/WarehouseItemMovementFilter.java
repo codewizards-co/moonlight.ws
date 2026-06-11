@@ -1,6 +1,7 @@
 package moonlight.ws.api.warehouse;
 
 import java.time.Instant;
+import java.util.Set;
 
 import jakarta.ws.rs.QueryParam;
 import lombok.Getter;
@@ -14,13 +15,16 @@ import moonlight.ws.api.Filter;
 public class WarehouseItemMovementFilter extends Filter {
 
 	@QueryParam("filter.warehouseItemId")
-	private Long filterWarehouseItemId;
+	private Set<Long> filterWarehouseItemIds;
 
 	@QueryParam("filter.warehouseItemErc")
 	private String filterWarehouseItemErc;
 
 	@QueryParam("filter.sku")
 	private String filterSku;
+
+	@QueryParam("filter.productName")
+	private String filterProductName;
 
 	@QueryParam("filter.warehouseId")
 	private Long filterWarehouseId;

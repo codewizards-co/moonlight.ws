@@ -22,10 +22,14 @@ public class WarehouseItemMovementDao extends AbstractDao<WarehouseItemMovementE
 		var params = new HashMap<String, Object>();
 		var jpqlCriteria = "";
 		if (filter != null) {
-			if (filter.getFilterWarehouseItemId() != null) {
-				jpqlCriteria += " and e.warehouseItemId = :warehouseItemId";
-				params.put("warehouseItemId", filter.getFilterWarehouseItemId());
+			if (filter.getFilterWarehouseItemIds() != null && !filter.getFilterWarehouseItemIds().isEmpty()) {
+				jpqlCriteria += " and e.warehouseItemId in :warehouseItemIds";
+				params.put("warehouseItemIds", filter.getFilterWarehouseItemIds());
+//			} else if (filter.getFilterWarehouseItemId() != null) {
+//				jpqlCriteria += " and e.warehouseItemId = :warehouseItemId";
+//				params.put("warehouseItemId", filter.getFilterWarehouseItemId());
 			}
+
 			if (filter.getFilterWarehouseItemErc() != null) {
 				jpqlCriteria += " and e.warehouseItemErc = :warehouseItemErc";
 				params.put("warehouseItemErc", filter.getFilterWarehouseItemErc());

@@ -28,14 +28,19 @@ export class WarehouseItemMovementRestService extends AbstractRestService<Wareho
             if (filter.filterWarehouseErc) {
                 query.push(`filter.warehouseErc=${filter.filterWarehouseErc}`);
             }
-            if (filter.filterWarehouseItemId) {
-                query.push(`filter.warehouseItemId=${filter.filterWarehouseItemId}`);
+            if (filter.filterWarehouseItemIds && filter.filterWarehouseItemIds.length > 0) {
+                for (const warehouseItemId of filter.filterWarehouseItemIds) {
+                    query.push(`filter.warehouseItemId=${warehouseItemId}`);
+                }
             }
             if (filter.filterWarehouseItemErc) {
                 query.push(`filter.warehouseItemErc=${filter.filterWarehouseItemErc}`);
             }
             if (filter.filterSku) {
                 query.push(`filter.sku=${encodeURIComponent(filter.filterSku)}`);
+            }
+            if (filter.filterProductName) {
+                query.push(`filter.productName=${encodeURIComponent(filter.filterProductName)}`);
             }
 
             if (filter.filterCreatedFromIncl !== undefined) {
