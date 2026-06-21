@@ -185,6 +185,14 @@
 			</dependency>
 			<dependency>
 				<groupId>com.liferay.commerce</groupId>
+				<artifactId>com.liferay.headless.commerce.admin.pricing.client</artifactId>
+				<version>4.0.39</version>
+				<!--
+				<version>4.0.44</version>
+				-->
+			</dependency>
+			<dependency>
+				<groupId>com.liferay.commerce</groupId>
 				<artifactId>com.liferay.headless.commerce.admin.shipment.client</artifactId>
 				<version>1.0.35</version>
 			</dependency>

@@ -11,6 +11,8 @@ import moonlight.ws.api.invoice.InvoiceInclude;
 import moonlight.ws.persistence.UserDao;
 import moonlight.ws.persistence.invoice.InvoiceEntity;
 import moonlight.ws.persistence.invoice.InvoiceItemEntity;
+import moonlight.ws.persistence.party.PartyDefaultDao;
+import moonlight.ws.persistence.party.PartyDefaultEntity;
 import moonlight.ws.persistence.party.PartyEntity;
 import moonlight.ws.persistence.warehouse.WarehouseItemMovementDao;
 import moonlight.ws.persistence.warehouse.WarehouseItemMovementEntity;
@@ -21,16 +23,21 @@ public abstract class AutoCreateInvoiceItemsForX {
 	private UserDao userDao;
 
 	@Inject
+	private PartyDefaultDao partyDefaultDao;
+
+	@Inject
 	protected WarehouseItemMovementDao warehouseItemMovementDao;
 
 	protected EntityManager entityManager;
 
 	protected InvoiceEntity invoice;
+	protected PartyDefaultEntity partyDefault;
 	protected PartyEntity party;
 
 	public @NonNull List<InvoiceItemEntity> createInvoiceItems(@NonNull InvoiceEntity invoice) {
 		this.invoice = invoice;
 		this.party = requireNonNull(invoice.getParty(), "invoice.party");
+		this.partyDefault = requireNonNull(partyDefaultDao.getEntity(), "partyDefault");
 		this.entityManager = warehouseItemMovementDao.getEntityManager();
 		var warehouseItemMovements = getWarehouseItemMovementsToProcess();
 		return warehouseItemMovements.stream().map(wim -> persisteInvoiceItem(createInvoiceItem(wim))).toList();

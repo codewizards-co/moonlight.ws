@@ -1,5 +1,6 @@
 package moonlight.ws.api.party;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 
@@ -64,6 +65,31 @@ public class PartyDto {
 	private String website;
 
 	private String description;
+
+	/**
+	 * The discount given to the consignee. It is applied directly and invisibly to
+	 * the regular net price.
+	 * <p>
+	 * Can be {@code null} which means to apply the global value from
+	 * {@link PartyDefaultDto}.
+	 */
+	private BigDecimal tradeDiscountPercent;
+
+	/**
+	 * The tax-percentage to be applied when charging an invoice to this party.
+	 * <p>
+	 * Can be {@code null} which means to apply the global value in
+	 * {@link PartyDefaultDto}.
+	 */
+	private BigDecimal taxPercent;
+
+	/**
+	 * The product-catalog used for determining the price of consignment-sales.
+	 * <p>
+	 * Can be {@code null} which means to use the global value from
+	 * {@link PartyDefaultDto}.
+	 */
+	private String catalogName;
 
 	/**
 	 * The consignee-relations of this party, if the client passed

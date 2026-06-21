@@ -509,7 +509,7 @@ public class LiferayBookingHelper {
 
 		var skuPrefix = getSkuPrefix(invoice.getWorkflow());
 		var sku = skuPrefix + (orderItemIndex + 1);
-		Sku skuObj = skuCache.getSkus().stream().filter(s -> sku.equals(s.getSku())).findFirst().orElse(null);
+		Sku skuObj = skuCache.getSkuBySku(sku);
 		requireNonNull(skuObj, "Sku[sku=%s]".formatted(sku));
 
 		orderItem.setExternalReferenceCode("moonlight_invoice_%d_sku_%s".formatted(invoice.getId(), realSku));
@@ -547,7 +547,7 @@ public class LiferayBookingHelper {
 		var invoiceItemGroupJson = new InvoiceItemGroupJson();
 		invoiceItemGroupJson.setVersion(1);
 		invoiceItemGroupJson.setSku(realSku);
-		List<Sku> realSkuObjs = skuCache.getSkus().stream().filter(s -> realSku.equals(s.getSku())).toList();
+		List<Sku> realSkuObjs = skuCache.getSkusBySku(realSku);
 		invoiceItemGroupJson.setProducts(realSkuObjs.stream()
 				.map(realSkuObj -> new WarehouseItemProductDto(realSkuObj.getProductId(), realSkuObj.getProductName()))
 				.toList());

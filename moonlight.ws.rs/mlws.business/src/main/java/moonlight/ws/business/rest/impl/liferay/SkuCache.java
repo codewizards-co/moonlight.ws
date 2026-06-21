@@ -3,6 +3,7 @@ package moonlight.ws.business.rest.impl.liferay;
 import static java.util.Objects.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
@@ -42,6 +43,14 @@ public class SkuCache {
 
 	private final CacheEntry cacheEntry = new CacheEntry();
 
+	public Sku getSkuBySku(@NonNull final String sku) throws Exception {
+		return getSkus().stream().filter(s -> sku.equals(s.getSku())).findFirst().orElse(null);
+	}
+
+	public List<Sku> getSkusBySku(@NonNull final String sku) throws Exception {
+		return getSkus().stream().filter(s -> sku.equals(s.getSku())).toList();
+	}
+
 	public List<Sku> getSkus() throws Exception {
 		if (EXPIRY_MS < 0) {
 			EXPIRY_MS = liferayConfig.getCacheExpiryMs();
@@ -72,7 +81,7 @@ public class SkuCache {
 			}
 		}
 		skus.trimToSize();
-		return skus;
+		return Collections.unmodifiableList(skus);
 	}
 
 	public List<WarehouseItemProductDto> getWarehouseItemProductDtos(@NonNull final String sku) throws Exception {

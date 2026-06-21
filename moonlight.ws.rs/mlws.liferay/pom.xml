@@ -53,7 +53,17 @@
 
 		<dependency>
 			<groupId>com.liferay.commerce</groupId>
+			<artifactId>com.liferay.headless.commerce.admin.catalog.client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.liferay.commerce</groupId>
 			<artifactId>com.liferay.headless.commerce.admin.inventory.client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.liferay.commerce</groupId>
+			<artifactId>com.liferay.headless.commerce.admin.pricing.client</artifactId>
 		</dependency>
 
 		<dependency>

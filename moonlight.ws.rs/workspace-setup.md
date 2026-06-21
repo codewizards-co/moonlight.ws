@@ -105,6 +105,8 @@ function preRequest() {
     if (rf.getEnvVar('mlws_url')) { 
         rf.setEnvVar('username', 'my_real_login')
         rf.setEnvVar('password', 'my_real_user-password')
+        rf.setEnvVar('liferay_username', 'login-if-needed')
+        rf.setEnvVar('liferay_password', 'password-if-needed')
     }
 }
 
@@ -112,6 +114,8 @@ function postRequest() {
     if (rf.getEnvVar('mlws_url')) { 
         rf.setEnvVar('username', '')
         rf.setEnvVar('password', '')
+        rf.setEnvVar('liferay_username', '')
+        rf.setEnvVar('liferay_password', '')
     }
 }
 
@@ -127,3 +131,6 @@ if('response' in rf) {
 In order to invoke a request to the moonlight.logistics-service, you must first call `OpenID`/`getToken`. Then, you can access actual moonlight.logistics-resources.
 
 **Warning!** This operation saves your bearer-token inside the public environment (=> git). This, however, is not a great danger, because such token is valid for only a short time. You should still be aware of it and possibly clear it when committing.
+
+**Note:** The `liferay_username` and `liferay_password` is normally not needed. It is only needed when experimenting with a liferay-instance and thus making use of its direct API.
+

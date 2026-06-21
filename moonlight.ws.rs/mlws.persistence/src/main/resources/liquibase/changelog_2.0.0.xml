@@ -494,4 +494,41 @@
 		</createIndex>
 	</changeSet>
 
+	<changeSet id="2026-06-21_mn_00" author="mn">
+		<addColumn tableName="Party">
+			<column name="tradeDiscountPercent" type="numeric(15, 2)" />
+			<column name="taxPercent" type="numeric(15, 2)" />
+			<column name="catalogName" type="varchar(50)" />
+		</addColumn>
+		
+		<createTable tableName="PartyDefault">
+			<column name="id" type="bigint">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="created" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="createdByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="changed" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="changedByUserId" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="tradeDiscountPercent" type="numeric(15, 2)">
+				<constraints nullable="false" />
+			</column>
+			<column name="taxPercent" type="numeric(15, 2)">
+				<constraints nullable="false" />
+			</column>
+			<column name="catalogName" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
 </databaseChangeLog>

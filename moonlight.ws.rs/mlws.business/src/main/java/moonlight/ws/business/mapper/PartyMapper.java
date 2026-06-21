@@ -47,6 +47,9 @@ public class PartyMapper extends AbstractMapper<PartyEntity, PartyDto> {
 		entity.setTaxNo(dto.getTaxNo());
 		entity.setWebsite(dto.getWebsite());
 		entity.setDescription(dto.getDescription());
+		entity.setTradeDiscountPercent(dto.getTradeDiscountPercent());
+		entity.setTaxPercent(dto.getTaxPercent());
+		entity.setCatalogName(dto.getCatalogName());
 		// The relations consignees and supplier are not written to the DB! They must be
 		// written via the consignee- or the supplier-REST-API.
 	}
@@ -75,6 +78,9 @@ public class PartyMapper extends AbstractMapper<PartyEntity, PartyDto> {
 		dto.setTaxNo(entity.getTaxNo());
 		dto.setWebsite(entity.getWebsite());
 		dto.setDescription(entity.getDescription());
+		dto.setTradeDiscountPercent(entity.getTradeDiscountPercent());
+		dto.setTaxPercent(entity.getTaxPercent());
+		dto.setCatalogName(entity.getCatalogName());
 
 		Set<String> fetchSet = getFetchSet(fetch);
 		if (fetchSet.contains("consignees")) {
