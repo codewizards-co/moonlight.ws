@@ -4,8 +4,8 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{liferay_url}}/o/headless-commerce-admin-order/v1.0/orders",
-    "sortOrder": 5,
+    "url": "{{mlws_url}}/party-default",
+    "sortOrder": 2,
     "parameters": [],
     "pathParameters": []
 }

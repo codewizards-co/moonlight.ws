@@ -4,13 +4,13 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{liferay_url}}/o/headless-commerce-admin-catalog/v1.0/products/{productId}/skus",
+    "url": "{{mlws_url}}/party-default/{id}",
     "sortOrder": 0,
     "parameters": [],
     "pathParameters": [
         {
-            "name": "productId",
-            "value": "34537"
+            "name": "id",
+            "value": "1"
         }
     ]
 }

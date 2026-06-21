@@ -4,7 +4,7 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "https://dragonkingchocolate.com:1443/liferay/web/dkc/my-account",
+    "url": "{{liferay_url}}/web/dkc/my-account",
     "sortOrder": 0,
     "parameters": [],
     "pathParameters": [],

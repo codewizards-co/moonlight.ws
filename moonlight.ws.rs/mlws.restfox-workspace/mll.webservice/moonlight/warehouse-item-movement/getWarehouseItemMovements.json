@@ -4,13 +4,13 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{mlws_url}}/warehouse-item-movement?sort=changed:desc,id:desc&fetch=supplier,products&filter.productName=/.*butter.*/i&filter.warehouseId=34549",
+    "url": "{{mlws_url}}/warehouse-item-movement?filter.booked=false&sort=changed:desc,id:desc&fetch=supplier",
     "sortOrder": 1,
     "parameters": [
         {
             "name": "filter.booked",
             "value": "false",
-            "disabled": true
+            "disabled": false
         },
         {
             "name": "filter.createdFromIncl",
@@ -74,7 +74,7 @@
         },
         {
             "name": "fetch",
-            "value": "supplier,products"
+            "value": "supplier"
         },
         {
             "name": "filter.groupId",
@@ -85,30 +85,6 @@
             "name": "filter.draft",
             "value": "true",
             "disabled": true
-        },
-        {
-            "name": "filter.warehouseItemId",
-            "value": "2",
-            "disabled": true
-        },
-        {
-            "name": "filter.warehouseItemId",
-            "value": "3",
-            "disabled": true
-        },
-        {
-            "name": "filter.warehouseItemId",
-            "value": "2234",
-            "disabled": true
-        },
-        {
-            "name": "filter.productName",
-            "value": "/.*butter.*/i",
-            "disabled": false
-        },
-        {
-            "name": "filter.warehouseId",
-            "value": "34549"
         }
     ],
     "pathParameters": []

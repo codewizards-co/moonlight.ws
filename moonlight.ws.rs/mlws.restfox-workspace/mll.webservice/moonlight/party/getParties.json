@@ -5,7 +5,7 @@
         "mimeType": "No Body"
     },
     "url": "{{mlws_url}}/party?fetch=consignees,supplier",
-    "sortOrder": 2,
+    "sortOrder": 3,
     "parameters": [
         {
             "name": "fetch",

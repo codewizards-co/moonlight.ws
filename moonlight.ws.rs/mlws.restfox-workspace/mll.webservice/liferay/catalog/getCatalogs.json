@@ -4,12 +4,12 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{liferay_url}}/o/headless-commerce-admin-catalog/v1.0/skus",
+    "url": "{{liferay_url}}/o/headless-commerce-admin-catalog/v1.0/catalogs",
     "sortOrder": 0,
     "parameters": [
         {
-            "name": "filter",
-            "value": "sku eq 'CABUT310'",
+            "name": "search",
+            "value": "dkc",
             "disabled": true
         }
     ],

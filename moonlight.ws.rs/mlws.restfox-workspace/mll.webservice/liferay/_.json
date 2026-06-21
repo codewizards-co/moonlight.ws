@@ -3,7 +3,7 @@
     "currentEnvironment": "Default",
     "authentication": {
         "type": "basic",
-        "username": "USER",
-        "password": "PASSWORD"
+        "username": "{{liferay_username}}",
+        "password": "{{liferay_password}}"
     }
 }

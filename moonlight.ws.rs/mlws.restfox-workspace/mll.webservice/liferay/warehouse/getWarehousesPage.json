@@ -4,7 +4,7 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "https://dragonkingchocolate.com:1443/liferay/o/headless-commerce-admin-inventory/v1.0/warehouses",
+    "url": "{{liferay_url}}/o/headless-commerce-admin-inventory/v1.0/warehouses",
     "sortOrder": 0,
     "parameters": [],
     "pathParameters": [],

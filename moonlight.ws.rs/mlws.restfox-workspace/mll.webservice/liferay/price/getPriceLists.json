@@ -4,17 +4,17 @@
     "body": {
         "mimeType": "No Body"
     },
-    "url": "{{liferay_url}}/o/headless-commerce-admin-catalog/v1.0/products",
-    "sortOrder": 1,
+    "url": "{{liferay_url}}/o/headless-commerce-admin-pricing/v2.0/price-lists",
+    "sortOrder": 0,
     "parameters": [
         {
-            "name": "fields",
-            "value": "id,productId,name,skuFormatted",
+            "name": "filter",
+            "value": "catalogId eq 32264",
             "disabled": true
         },
         {
             "name": "filter",
-            "value": "skus/any(x:x eq 'CABUT310')",
+            "value": "catalogBasePriceList eq true",
             "disabled": true
         }
     ],

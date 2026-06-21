@@ -5,5 +5,8 @@
     "openid_clientId": "dragonkingchocolate-webui",
     "username": "",
     "password": "",
+    "liferay_url": "https://dragonkingchocolate.com/liferay",
+    "liferay_username": "",
+    "liferay_password": "",
     "openid_token": ""
 }

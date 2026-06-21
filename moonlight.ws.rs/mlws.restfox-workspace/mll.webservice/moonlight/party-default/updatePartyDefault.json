@@ -1,0 +1,23 @@
+{
+    "_type": "request",
+    "method": "PUT",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"tradeDiscountPercent\": 20,\n    \"taxPercent\": 0,\n    \"catalogName\": \"dkc\"\n}"
+    },
+    "url": "{{mlws_url}}/party-default/{id}",
+    "sortOrder": 0,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "1"
+        }
+    ],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}
