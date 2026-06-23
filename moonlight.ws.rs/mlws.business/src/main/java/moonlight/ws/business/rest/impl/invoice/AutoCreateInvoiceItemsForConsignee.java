@@ -2,6 +2,7 @@ package moonlight.ws.business.rest.impl.invoice;
 
 import static java.util.Objects.*;
 import static moonlight.ws.base.util.StringUtil.*;
+import static moonlight.ws.business.RoundingConst.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -123,7 +124,8 @@ public class AutoCreateInvoiceItemsForConsignee extends AutoCreateInvoiceItemsFo
 					"partyDefault.tradeDiscountPercent");
 		}
 		final BigDecimal _100 = BigDecimal.valueOf(100L);
-		return productPriceSingleNet.multiply(_100.subtract(tradeDiscountPercent)).divide(_100);
+		return productPriceSingleNet.multiply(_100.subtract(tradeDiscountPercent)).divide(_100, PRICE_SINGLE_SCALE,
+				ROUNDING_MODE);
 	}
 
 	protected BigDecimal readProductPriceSingleNet(@NonNull InvoiceItemEntity invoiceItem) {

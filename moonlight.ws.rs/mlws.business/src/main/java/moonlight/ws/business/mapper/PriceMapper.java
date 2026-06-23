@@ -1,7 +1,7 @@
 package moonlight.ws.business.mapper;
 
 import static java.util.Objects.*;
-import static moonlight.ws.api.PriceDto.*;
+import static moonlight.ws.business.RoundingConst.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +14,6 @@ import moonlight.ws.api.PriceDto;
 public class PriceMapper {
 
 	private static final BigDecimal _100 = BigDecimal.valueOf(100L);
-	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 
 	public PriceDto toDto(BigDecimal quantity, BigDecimal priceTotalNet, BigDecimal priceTotalGross,
 			BigDecimal taxPercent) {
@@ -75,10 +74,12 @@ public class PriceMapper {
 				priceSingleGross = calculateGrossFromNet(priceSingleNet, taxPercent, PRICE_SINGLE_SCALE);
 			}
 			if (taxPercent == null && priceTotalGross != null && priceTotalNet != null) {
-				taxPercent = priceTotalGross.multiply(_100).divide(priceTotalNet, 1, ROUNDING_MODE).subtract(_100);
+				taxPercent = priceTotalGross.multiply(_100).divide(priceTotalNet, TAX_PERCENT_SCALE, ROUNDING_MODE)
+						.subtract(_100);
 			}
 			if (taxPercent == null && priceSingleGross != null && priceSingleNet != null) {
-				taxPercent = priceSingleGross.multiply(_100).divide(priceSingleNet, 1, ROUNDING_MODE).subtract(_100);
+				taxPercent = priceSingleGross.multiply(_100).divide(priceSingleNet, TAX_PERCENT_SCALE, ROUNDING_MODE)
+						.subtract(_100);
 			}
 			price.setPriceSingleNet(priceSingleNet);
 			price.setPriceSingleGross(priceSingleGross);
@@ -96,13 +97,13 @@ public class PriceMapper {
 
 	public BigDecimal calculateNetFromGross(@NonNull BigDecimal grossPrice, @NonNull BigDecimal taxPercent, int scale) {
 		return grossPrice.divide( //
-				BigDecimal.ONE.add(taxPercent.divide(_100, 2, RoundingMode.UNNECESSARY)), //
+				BigDecimal.ONE.add(taxPercent.divide(_100, TAX_PERCENT_SCALE + 2, RoundingMode.UNNECESSARY)), //
 				scale, ROUNDING_MODE);
 	}
 
 	public BigDecimal calculateGrossFromNet(@NonNull BigDecimal netPrice, @NonNull BigDecimal taxPercent, int scale) {
 		return netPrice.multiply( //
-				BigDecimal.ONE.add(taxPercent.divide(_100, 2, RoundingMode.UNNECESSARY))) //
+				BigDecimal.ONE.add(taxPercent.divide(_100, TAX_PERCENT_SCALE + 2, RoundingMode.UNNECESSARY))) //
 				.setScale(scale, ROUNDING_MODE);
 	}
 

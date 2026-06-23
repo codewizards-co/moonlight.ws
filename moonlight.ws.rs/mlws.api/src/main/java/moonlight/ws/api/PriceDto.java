@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 public class PriceDto implements Cloneable {
 
-	public static final int PRICE_TOTAL_SCALE = 2;
-	public static final int PRICE_SINGLE_SCALE = 4;
-
 	private BigDecimal priceSingleNet;
 	private BigDecimal priceSingleGross;
 	private BigDecimal priceTotalNet;
