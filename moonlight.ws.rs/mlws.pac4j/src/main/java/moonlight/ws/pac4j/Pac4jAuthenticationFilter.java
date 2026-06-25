@@ -2,6 +2,7 @@ package moonlight.ws.pac4j;
 
 import static java.util.Objects.*;
 import static moonlight.ws.api.RestConst.*;
+import static moonlight.ws.base.util.StringUtil.*;
 import static moonlight.ws.pac4j.Pac4jConfigProducer.*;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import org.pac4j.oidc.profile.OidcProfileDefinition;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.inject.spi.CDI;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.Priorities;
@@ -29,6 +31,8 @@ import jakarta.ws.rs.ext.Provider;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.AuthInfo;
 import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.base.auth.AuthCookie;
+import moonlight.ws.base.auth.AuthCookieRegistry;
 import moonlight.ws.base.internal.AuthInfoAccessor;
 import moonlight.ws.base.util.StringUtil;
 
@@ -45,24 +49,38 @@ public class Pac4jAuthenticationFilter implements ContainerRequestFilter {
 
 	private final NotAuthorizedExceptionFactory notAuthorizedExceptionFactory;
 
-	@Context
-	private HttpServletRequest httpRequest;
+	private final AuthCookieRegistry authCookieRegistry;
 
 	@Context
-	private HttpServletResponse httpResponse;
+	private HttpServletRequest servletRequest;
+
+	@Context
+	private HttpServletResponse servletResponse;
 
 	public Pac4jAuthenticationFilter() {
 		log.debug("Pac4jAuthenticationFilter created.");
 		CDI<Object> cdi = CDI.current();
 		config = cdi.select(Config.class).get();
 		notAuthorizedExceptionFactory = cdi.select(NotAuthorizedExceptionFactory.class).get();
+		authCookieRegistry = cdi.select(AuthCookieRegistry.class).get();
 	}
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+		try {
+			authenticateOpenId();
+		} catch (Exception openIdAuthFailed) {
+			if (authenticateAuthCookie()) {
+				return;
+			}
+			throw openIdAuthFailed;
+		}
+	}
+
+	private void authenticateOpenId() {
 		// Grab the raw token from the auth-header
 		String _tokenString = null;
-		String authHeader = httpRequest.getHeader(HEADER_AUTH);
+		String authHeader = servletRequest.getHeader(HEADER_AUTH);
 		if (authHeader != null && authHeader.startsWith(HEADER_AUTH_BEARER_PREFIX)) {
 			_tokenString = authHeader.substring(HEADER_AUTH_BEARER_PREFIX.length()).trim(); // removes "Bearer "
 		}
@@ -74,7 +92,7 @@ public class Pac4jAuthenticationFilter implements ContainerRequestFilter {
 
 		try {
 			// Wrap JEE request/response into the pac4j parameters abstraction
-			FrameworkParameters parameters = new JEEFrameworkParameters(httpRequest, httpResponse);
+			FrameworkParameters parameters = new JEEFrameworkParameters(servletRequest, servletResponse);
 
 			SecurityGrantedAccessAdapter securityGrantedAccessAdapter = (webContext, sessionStore, profiles) -> {
 				// This block executes ONLY if authentication succeeds
@@ -98,6 +116,38 @@ public class Pac4jAuthenticationFilter implements ContainerRequestFilter {
 //			requestContext.abortWith(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
 			throw notAuthorizedExceptionFactory.createNotAuthorizedException();
 		}
+	}
+
+	private boolean authenticateAuthCookie() {
+		requireNonNull(servletRequest, "servletRequest");
+		Cookie cookie = getAuthCookieFromServletRequest();
+		if (cookie != null) {
+			String authCookieToken = cookie.getValue();
+			if (!isEmpty(authCookieToken)) {
+				AuthCookie authCookie = authCookieRegistry.getAuthCookieByBearerTokenSha256(authCookieToken);
+				if (authCookie == null || authCookie.isExpired()) {
+					log.error("AUTH_TOKEN '{}' unknown or expired!", authCookieToken);
+				} else {
+					setAuthInfo(authCookie.authInfo);
+					log.info("Authenticated user via auth-cookie: {}, {}", authCookie.authInfo.getUsername(),
+							authCookieToken);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private Cookie getAuthCookieFromServletRequest() {
+		Cookie[] cookies = servletRequest.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (COOKIE_AUTH_TOKEN.equals(cookie.getName())) {
+					return cookie;
+				}
+			}
+		}
+		return null;
 	}
 
 	@SuppressWarnings("deprecation")
