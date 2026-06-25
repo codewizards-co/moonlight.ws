@@ -11,6 +11,7 @@
 	<artifactId>mlws.pac4j</artifactId>
 
 	<properties>
+		<jakartaee-pac4j.version>8.0.3</jakartaee-pac4j.version>
 		<pac4j.version>6.5.3</pac4j.version>
 	</properties>
 
@@ -51,12 +52,12 @@
 
 		<dependency>
 			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-core</artifactId>
-			<version>${pac4j.version}</version>
+			<artifactId>jakartaee-pac4j</artifactId>
+			<version>${jakartaee-pac4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
-			<artifactId>pac4j-oidc</artifactId>
+			<artifactId>pac4j-core</artifactId>
 			<version>${pac4j.version}</version>
 		</dependency>
 		<dependency>
@@ -71,8 +72,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
-			<artifactId>jakartaee-pac4j</artifactId>
-			<version>8.0.3</version>
+			<artifactId>pac4j-oidc</artifactId>
+			<version>${pac4j.version}</version>
 		</dependency>
 
 		<dependency>
