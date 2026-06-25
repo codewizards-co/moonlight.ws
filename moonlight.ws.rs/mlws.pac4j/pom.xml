@@ -8,8 +8,11 @@
 		<version>2.7.0-SNAPSHOT</version>
 	</parent>
 
-	<!-- UNUSED! This maven-module is not used anymore! It was replaced by mlws.pac4j! -->
-	<artifactId>mlws.keycloak</artifactId>
+	<artifactId>mlws.pac4j</artifactId>
+
+	<properties>
+		<pac4j.version>6.5.3</pac4j.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -47,24 +50,29 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-adapter-core</artifactId>
-			<version>25.0.3</version>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-core</artifactId>
+			<version>${pac4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-adapter-spi</artifactId>
-			<version>25.0.3</version>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-oidc</artifactId>
+			<version>${pac4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-core</artifactId>
-			<version>25.0.3</version>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-http</artifactId>
+			<version>${pac4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-policy-enforcer</artifactId>
-			<version>25.0.3</version>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-jwt</artifactId>
+			<version>${pac4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>jakartaee-pac4j</artifactId>
+			<version>8.0.3</version>
 		</dependency>
 
 		<dependency>

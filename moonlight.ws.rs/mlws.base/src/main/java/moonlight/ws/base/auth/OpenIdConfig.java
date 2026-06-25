@@ -1,4 +1,4 @@
-package moonlight.ws.keycloak;
+package moonlight.ws.base.auth;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;

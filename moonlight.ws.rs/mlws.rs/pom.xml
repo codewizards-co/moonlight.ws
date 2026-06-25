@@ -30,7 +30,7 @@
 		</dependency>
 		<dependency>
 			<groupId>moonlight.ws</groupId>
-			<artifactId>mlws.keycloak</artifactId>
+			<artifactId>mlws.pac4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>moonlight.ws</groupId>

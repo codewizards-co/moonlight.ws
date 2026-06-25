@@ -17,7 +17,6 @@
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
 		<jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
-		<keycloak.version>25.0.3</keycloak.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -30,9 +29,9 @@
 		<module>mlws.business</module>
 		<module>mlws.healthcheck.cli</module>
 		<module>mlws.hibernate</module>
-		<module>mlws.keycloak</module>
 		<module>mlws.liferay</module>
 		<module>mlws.persistence</module>
+		<module>mlws.pac4j</module>
 		<module>mlws.rs</module>
 	</modules>
 	
@@ -69,12 +68,12 @@
 			</dependency>
 			<dependency>
 				<groupId>moonlight.ws</groupId>
-				<artifactId>mlws.keycloak</artifactId>
+				<artifactId>mlws.liferay</artifactId>
 				<version>2.7.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>moonlight.ws</groupId>
-				<artifactId>mlws.liferay</artifactId>
+				<artifactId>mlws.pac4j</artifactId>
 				<version>2.7.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
@@ -201,27 +200,6 @@
 				<groupId>org.jboss.ejb3</groupId>
 				<artifactId>jboss-ejb3-ext-api</artifactId>
 				<version>2.4.0.Final</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.keycloak</groupId>
-				<artifactId>keycloak-adapter-core</artifactId>
-				<version>${keycloak.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.keycloak</groupId>
-				<artifactId>keycloak-adapter-spi</artifactId>
-				<version>${keycloak.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.keycloak</groupId>
-				<artifactId>keycloak-core</artifactId>
-				<version>${keycloak.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.keycloak</groupId>
-				<artifactId>keycloak-policy-enforcer</artifactId>
-				<version>${keycloak.version}</version>
 			</dependency>
 
 			<dependency>

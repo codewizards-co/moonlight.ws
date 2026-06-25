@@ -13,12 +13,14 @@ import org.keycloak.adapters.spi.AuthOutcome;
 import org.keycloak.adapters.spi.HttpFacade;
 import org.keycloak.representations.AccessToken;
 
+import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.NotAuthorizedException;
+import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
@@ -31,6 +33,7 @@ import moonlight.ws.api.AuthInfo;
 import moonlight.ws.api.RequiresAuthentication;
 import moonlight.ws.base.auth.AuthCookie;
 import moonlight.ws.base.auth.AuthCookieRegistry;
+import moonlight.ws.base.auth.OpenIdConfig;
 import moonlight.ws.base.internal.AuthInfoAccessor;
 
 /**
@@ -40,6 +43,7 @@ import moonlight.ws.base.internal.AuthInfoAccessor;
  */
 @Provider
 @RequiresAuthentication
+@Priority(Priorities.AUTHENTICATION) // runs early in the chain
 @Slf4j
 public class KeycloakAuthenticationFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
@@ -111,8 +115,7 @@ public class KeycloakAuthenticationFilter implements ContainerRequestFilter, Con
 					_authenticateOpenId();
 					return true;
 				}
-				log.error("Auth-type '{}' not supported! Supported auth-types are: {}", authType,
-						SUPPORTED_AUTH_TYPES);
+				log.error("Auth-type '{}' not supported! Supported auth-types are: {}", authType, SUPPORTED_AUTH_TYPES);
 			}
 		}
 		return false;

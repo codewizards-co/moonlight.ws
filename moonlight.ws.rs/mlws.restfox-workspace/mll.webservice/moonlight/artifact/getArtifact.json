@@ -16,5 +16,12 @@
             "name": "artifactId",
             "value": "mlws.rs"
         }
+    ],
+    "headers": [
+        {
+            "name": "Authorization",
+            "value": "",
+            "disabled": true
+        }
     ]
 }

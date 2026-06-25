@@ -19,6 +19,8 @@ public interface RestConst {
 
 	String HEADER_AUTH = "Authorization";
 
+	String HEADER_AUTH_BEARER_PREFIX = "Bearer ";
+
 	/**
 	 * Query-parameter for the page-number.
 	 *

@@ -11,6 +11,7 @@ import org.keycloak.representations.adapters.config.AdapterConfig;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
+import moonlight.ws.base.auth.OpenIdConfig;
 
 /**
  * Factory instantiating a configured {@link KeycloakDeployment} from the

@@ -1,4 +1,4 @@
-package moonlight.ws.keycloak.health.impl;
+package moonlight.ws.business.rest.impl.health;
 
 import static java.nio.charset.StandardCharsets.*;
 import static moonlight.ws.base.util.StringUtil.*;
@@ -16,9 +16,9 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import moonlight.ws.base.auth.OpenIdConfig;
 import moonlight.ws.base.health.HealthCheck;
 import moonlight.ws.base.health.HealthStatus;
-import moonlight.ws.keycloak.OpenIdConfig;
 
 @RequestScoped
 @Slf4j
