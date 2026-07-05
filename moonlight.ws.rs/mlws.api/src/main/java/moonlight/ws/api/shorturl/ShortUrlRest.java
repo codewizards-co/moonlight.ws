@@ -24,6 +24,7 @@ import moonlight.ws.api.auth.Role;
 public interface ShortUrlRest {
 
 	@GET
+	@RequiresAuthentication
 	ShortUrlDtoPage getShortUrls(@BeanParam ShortUrlFilter filter);
 
 	@GET
