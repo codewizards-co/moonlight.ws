@@ -26,8 +26,8 @@ import moonlight.ws.business.shorturl.ShortUrlConfig;
 import moonlight.ws.business.shorturl.ShortUrlStaticMapping;
 import moonlight.ws.business.shorturl.ShortUrlStaticMappingRegistry;
 import moonlight.ws.business.shorturl.UrlType;
-import moonlight.ws.persistence.UserDao;
-import moonlight.ws.persistence.UserEntity;
+import moonlight.ws.persistence.auth.UserDao;
+import moonlight.ws.persistence.auth.UserEntity;
 import moonlight.ws.persistence.shorturl.ShortUrlDao;
 import moonlight.ws.persistence.shorturl.ShortUrlEntity;
 

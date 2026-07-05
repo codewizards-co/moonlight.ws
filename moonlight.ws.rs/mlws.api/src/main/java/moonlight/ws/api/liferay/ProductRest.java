@@ -10,12 +10,15 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresRole;
+import moonlight.ws.api.auth.Role;
 
 @Path("product")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @RequiresAuthentication
+@RequiresRole(Role.BASIC)
 public interface ProductRest {
 
 	@GET

@@ -22,8 +22,8 @@ import moonlight.ws.api.party.PartyFilter;
 import moonlight.ws.api.party.PartyRest;
 import moonlight.ws.api.party.SupplierDto;
 import moonlight.ws.business.mapper.PartyMapper;
-import moonlight.ws.persistence.UserDao;
-import moonlight.ws.persistence.UserEntity;
+import moonlight.ws.persistence.auth.UserDao;
+import moonlight.ws.persistence.auth.UserEntity;
 import moonlight.ws.persistence.party.PartyDao;
 import moonlight.ws.persistence.party.PartyEntity;
 

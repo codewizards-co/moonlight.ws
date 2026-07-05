@@ -1,4 +1,4 @@
-package moonlight.ws.api;
+package moonlight.ws.api.auth;
 
 public interface UserConst {
 

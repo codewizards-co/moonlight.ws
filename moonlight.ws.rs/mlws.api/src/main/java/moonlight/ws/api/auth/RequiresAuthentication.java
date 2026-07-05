@@ -1,4 +1,4 @@
-package moonlight.ws.api;
+package moonlight.ws.api.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,8 +17,10 @@ import jakarta.ws.rs.NameBinding;
  * methods. If fine-grained control is needed, this annotation can be applied to
  * individual methods of a RESTful interface (or class).
  * <p>
- * The default (and currently only) implementation bound to this annotation is
- * the {@code KeycloakAuthenticationFilter}.
+ * The default implementation bound to this annotation is the
+ * {@code Pac4jAuthenticationFilter}. There still is additionally
+ * {@code KeycloakAuthenticationFilter}, but it is not used, anymore. It is only
+ * kept for reference for a while.
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(value = RetentionPolicy.RUNTIME)

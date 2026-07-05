@@ -12,7 +12,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import lombok.NonNull;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresRole;
+import moonlight.ws.api.auth.Role;
 
 /**
  * RESTful API for managing {@linkplain PartyDto party-instances}.
@@ -27,6 +29,7 @@ import moonlight.ws.api.RequiresAuthentication;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @RequiresAuthentication
+@RequiresRole(Role.BASIC)
 public interface PartyRest {
 
 	@GET

@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import lombok.NonNull;
 import moonlight.ws.api.invoice.InvoiceInclude;
-import moonlight.ws.persistence.UserDao;
+import moonlight.ws.persistence.auth.UserDao;
 import moonlight.ws.persistence.invoice.InvoiceEntity;
 import moonlight.ws.persistence.invoice.InvoiceItemEntity;
 import moonlight.ws.persistence.party.PartyDefaultDao;

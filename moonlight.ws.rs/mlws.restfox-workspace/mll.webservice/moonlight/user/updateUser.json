@@ -1,0 +1,23 @@
+{
+    "_type": "request",
+    "method": "PUT",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"dkctae\",\n    \"roles\": [\n        \"BASIC\"\n    ]\n}"
+    },
+    "url": "{{mlws_url}}/user/{id}",
+    "sortOrder": 3,
+    "parameters": [],
+    "pathParameters": [
+        {
+            "name": "id",
+            "value": "5"
+        }
+    ],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        }
+    ]
+}

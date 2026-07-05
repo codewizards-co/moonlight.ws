@@ -11,7 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import lombok.NonNull;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
 
 @Path("country")
 @Consumes(APPLICATION_JSON)

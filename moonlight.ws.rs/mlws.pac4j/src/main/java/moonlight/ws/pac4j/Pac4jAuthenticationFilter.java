@@ -30,7 +30,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.ext.Provider;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.AuthInfo;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
 import moonlight.ws.base.auth.AuthCookie;
 import moonlight.ws.base.auth.AuthCookieRegistry;
 import moonlight.ws.base.internal.AuthInfoAccessor;
@@ -38,7 +38,7 @@ import moonlight.ws.base.util.StringUtil;
 
 @Provider
 @RequiresAuthentication
-@Priority(Priorities.AUTHENTICATION) // runs early in the chain
+@Priority(Priorities.AUTHENTICATION) // runs early in the chain (before AUTHORIZATION)
 @Slf4j
 public class Pac4jAuthenticationFilter implements ContainerRequestFilter {
 

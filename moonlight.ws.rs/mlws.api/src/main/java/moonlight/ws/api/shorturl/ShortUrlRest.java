@@ -14,7 +14,9 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 import lombok.NonNull;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresRole;
+import moonlight.ws.api.auth.Role;
 
 @Path("short-url")
 @Consumes(APPLICATION_JSON)
@@ -40,15 +42,18 @@ public interface ShortUrlRest {
 
 	@POST
 	@RequiresAuthentication
+	@RequiresRole(Role.BASIC)
 	ShortUrlDto createShortUrl(@NonNull ShortUrlDto shortUrl);
 
 	@PUT
 	@Path("{id}")
 	@RequiresAuthentication
+	@RequiresRole(Role.BASIC)
 	ShortUrlDto updateShortUrl(@NonNull @PathParam("id") Long id, ShortUrlDto shortUrl);
 
 	@DELETE
 	@Path("{id}")
 	@RequiresAuthentication
+	@RequiresRole(Role.BASIC)
 	void deleteShortUrl(@NonNull @PathParam("id") Long id);
 }

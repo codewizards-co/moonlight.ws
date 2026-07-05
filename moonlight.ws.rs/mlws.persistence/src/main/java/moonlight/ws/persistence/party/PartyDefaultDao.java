@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import lombok.NonNull;
-import moonlight.ws.api.UserConst;
+import moonlight.ws.api.auth.UserConst;
 import moonlight.ws.persistence.AbstractDao;
 
 @RequestScoped

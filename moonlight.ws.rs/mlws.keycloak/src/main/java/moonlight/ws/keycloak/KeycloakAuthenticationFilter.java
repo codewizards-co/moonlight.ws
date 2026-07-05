@@ -30,7 +30,7 @@ import jakarta.ws.rs.ext.Provider;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.AuthInfo;
-import moonlight.ws.api.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresAuthentication;
 import moonlight.ws.base.auth.AuthCookie;
 import moonlight.ws.base.auth.AuthCookieRegistry;
 import moonlight.ws.base.auth.OpenIdConfig;

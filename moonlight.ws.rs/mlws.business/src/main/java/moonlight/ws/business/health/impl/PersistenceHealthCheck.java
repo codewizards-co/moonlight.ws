@@ -4,10 +4,10 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import moonlight.ws.api.UserConst;
+import moonlight.ws.api.auth.UserConst;
 import moonlight.ws.base.health.HealthCheck;
 import moonlight.ws.base.health.HealthStatus;
-import moonlight.ws.persistence.UserDao;
+import moonlight.ws.persistence.auth.UserDao;
 import moonlight.ws.persistence.shorturl.ShortUrlDao;
 import moonlight.ws.persistence.warehouse.WarehouseItemMovementDao;
 

@@ -5,9 +5,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 import lombok.NonNull;
-import moonlight.ws.api.UserConst;
-import moonlight.ws.persistence.UserDao;
-import moonlight.ws.persistence.UserEntity;
+import moonlight.ws.api.auth.UserConst;
+import moonlight.ws.persistence.auth.UserDao;
+import moonlight.ws.persistence.auth.UserEntity;
 
 @RequestScoped
 public class UserInitializer {

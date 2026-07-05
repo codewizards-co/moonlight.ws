@@ -15,10 +15,15 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import lombok.NonNull;
+import moonlight.ws.api.auth.RequiresAuthentication;
+import moonlight.ws.api.auth.RequiresRole;
+import moonlight.ws.api.auth.Role;
 
 @Path("invoice")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
+@RequiresAuthentication
+@RequiresRole(Role.ACCOUNTANT)
 public interface InvoiceRest {
 	@GET
 	@Path("{id}")

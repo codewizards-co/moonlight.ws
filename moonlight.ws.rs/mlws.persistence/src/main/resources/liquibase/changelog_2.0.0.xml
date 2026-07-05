@@ -500,7 +500,7 @@
 			<column name="taxPercent" type="numeric(15, 2)" />
 			<column name="catalogName" type="varchar(50)" />
 		</addColumn>
-		
+
 		<createTable tableName="PartyDefault">
 			<column name="id" type="bigint">
 				<constraints nullable="false" primaryKey="true" />
@@ -531,4 +531,13 @@
 		</createTable>
 	</changeSet>
 
+	<changeSet id="2026-07-05_mn_00" author="mn">
+		<addColumn tableName="User">
+			<column name="roleBits" type="bigint" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+
+		<sql><![CDATA[update "User" set "roleBits" = 576460752303423488 where "id" <> 2;]]></sql>
+	</changeSet>
 </databaseChangeLog>

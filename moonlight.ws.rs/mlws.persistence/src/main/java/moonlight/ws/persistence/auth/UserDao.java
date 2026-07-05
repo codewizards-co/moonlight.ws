@@ -1,4 +1,4 @@
-package moonlight.ws.persistence;
+package moonlight.ws.persistence.auth;
 
 import static java.util.Objects.*;
 
@@ -10,21 +10,32 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import moonlight.ws.api.AuthInfo;
-import moonlight.ws.api.UserConst;
-import moonlight.ws.api.UserFilter;
+import moonlight.ws.api.auth.Role;
+import moonlight.ws.api.auth.UserConst;
+import moonlight.ws.api.auth.UserFilter;
+import moonlight.ws.persistence.AbstractDao;
+import moonlight.ws.persistence.SearchResult;
 
 @RequestScoped
+@Slf4j
 public class UserDao extends AbstractDao<UserEntity> {
 
 	@Inject
 	private AuthInfo authInfo;
 
-	@Transactional(value = TxType.REQUIRED, rollbackOn = Throwable.class)
+	@Transactional(value = TxType.REQUIRES_NEW, rollbackOn = Throwable.class)
 	public UserEntity currentUser() {
 		if (!authInfo.isAuthenticated()) {
-			UserEntity entity = getEntity(UserConst.ANONYMOUS_USERID);
-			return requireNonNull(entity, "anonymousUser"); // must exist due to UserInitializer!
+			// Anonymous user must exist due to UserInitializer!
+			UserEntity entity = requireNonNull(getEntity(UserConst.ANONYMOUS_USERID), "anonymousUser");
+			if (entity.getRoleBits() != 0L) {
+				log.warn("currentUser: User %s was granted roles %s! Clearing them again!"
+						.formatted(entity.getUsername(), Role.fromBits(entity.getRoleBits())));
+				entity.setRoleBits(0L);
+			}
+			return entity;
 		}
 
 		UserEntity entity = getEntity(authInfo.getUsername());

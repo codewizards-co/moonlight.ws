@@ -16,8 +16,8 @@ import moonlight.ws.api.party.PartyDefaultDto;
 import moonlight.ws.api.party.PartyDefaultDtoPage;
 import moonlight.ws.api.party.PartyDefaultRest;
 import moonlight.ws.business.mapper.PartyDefaultMapper;
-import moonlight.ws.persistence.UserDao;
-import moonlight.ws.persistence.UserEntity;
+import moonlight.ws.persistence.auth.UserDao;
+import moonlight.ws.persistence.auth.UserEntity;
 import moonlight.ws.persistence.party.PartyDefaultDao;
 
 @RequestScoped
